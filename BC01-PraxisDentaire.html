@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PraxisDentaire · BC01 Prise en charge de la personne</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fdfcfb; --bg2:#f4faf9; --panel:#ffffff; --bdr:#e2ede9;
+  --txt:#1a2e2a; --txt2:#6b8580; --mint:#2dd4bf; --mint-dk:#0d9488;
+  --coral:#ff8a7a; --red:#e8604a; --amber:#f5a623;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Poppins',system-ui,sans-serif;
+  background:linear-gradient(160deg,var(--bg) 0%,var(--bg2) 100%);
+  color:var(--txt);min-height:100vh;padding-bottom:60px;
+}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+
+.topbar{display:flex;align-items:center;gap:10px;padding:20px 0 6px}
+.back-link{display:flex;align-items:center;gap:6px;color:var(--txt2);text-decoration:none;font-size:13px}
+.back-link svg{width:20px;height:20px}
+
+header{padding:16px 0 24px}
+.bc-badge{
+  display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;
+  font-size:11.5px;letter-spacing:1px;color:var(--mint-dk);background:rgba(45,212,191,.1);
+  border:1px solid rgba(45,212,191,.3);padding:5px 12px;border-radius:20px;margin-bottom:12px;
+}
+h1{font-weight:700;font-size:clamp(24px,5.5vw,32px);letter-spacing:-.3px}
+.tagline{color:var(--txt2);font-size:14px;margin-top:8px;max-width:480px;line-height:1.6}
+
+.section-label{
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;
+  color:var(--txt2);margin:32px 0 12px;
+}
+
+.urgence-card{background:var(--panel);border:1.5px solid var(--bdr);border-radius:14px;overflow:hidden;margin-bottom:10px;box-shadow:0 2px 10px rgba(13,148,136,.05)}
+.urgence-head{display:flex;align-items:center;gap:12px;padding:15px 16px;cursor:pointer}
+.urgence-icon{font-size:22px;flex-shrink:0}
+.urgence-title{font-weight:600;font-size:15.5px}
+.urgence-sub{font-size:12px;color:var(--txt2);margin-top:1px}
+.urgence-chevron{margin-left:auto;color:var(--txt2);transition:transform .2s}
+.urgence-card.open .urgence-chevron{transform:rotate(90deg)}
+.urgence-body{display:none;padding:0 16px 16px 50px;font-size:13px;color:var(--txt2);line-height:1.65}
+.urgence-card.open .urgence-body{display:block}
+.urgence-body b{color:var(--txt)}
+.urgence-body ul{padding-left:18px;margin-top:6px}
+.urgence-body li{margin-bottom:5px}
+.do{color:var(--mint-dk)}
+.dont{color:var(--red)}
+
+.alert-box{
+  background:rgba(255,138,122,.1);border:1px solid rgba(255,138,122,.3);border-radius:12px;
+  padding:14px 16px;margin:20px 0;font-size:13px;color:var(--txt);line-height:1.6;
+}
+.alert-box strong{color:var(--red)}
+
+.source-note{font-size:11px;color:var(--txt2);text-align:right;margin-top:6px;font-style:italic}
+
+.qcard{background:var(--panel);border:1.5px solid var(--bdr);border-radius:14px;padding:18px;margin-bottom:14px;box-shadow:0 2px 10px rgba(13,148,136,.05)}
+.qcard .call-type{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:1px;color:var(--mint-dk);margin-bottom:8px}
+.qcard .profil{font-size:14.5px;margin-bottom:12px;line-height:1.55}
+.qcard .opt{display:block;width:100%;text-align:left;background:var(--bg2);border:1.5px solid var(--bdr);border-radius:10px;color:var(--txt);padding:11px 14px;margin-bottom:8px;font-size:13.5px;font-family:'Poppins',sans-serif;cursor:pointer;transition:border-color .15s}
+.qcard .opt:hover{border-color:var(--mint)}
+.qcard .opt.ok{border-color:var(--mint-dk);background:rgba(45,212,191,.12);color:var(--mint-dk);font-weight:600}
+.qcard .opt.ko{border-color:var(--red);background:rgba(232,96,74,.08);color:var(--red)}
+.qcard .explic{display:none;margin-top:10px;padding:12px 14px;border-radius:10px;background:rgba(45,212,191,.08);border:1px solid rgba(45,212,191,.25);font-size:13px;line-height:1.6}
+.qcard .explic.show{display:block}
+
+.note-box{
+  background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.3);border-radius:12px;
+  padding:14px 16px;margin:26px 0 6px;font-size:12.5px;color:var(--txt);line-height:1.6;
+}
+.note-box strong{color:#b8760f}
+
+footer{text-align:center;padding:30px 20px 10px;color:var(--txt2);font-size:11px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <a class="back-link" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      PraxisDentaire
+    </a>
+  </div>
+
+  <header>
+    <div class="bc-badge">BC01 · PRISE EN CHARGE DE LA PERSONNE</div>
+    <h1>Reconnaître l'urgence & accueillir l'appel</h1>
+    <p class="tagline">Discerner le caractère urgent d'une situation, et conduire un entretien téléphonique adapté — deux compétences directement évaluées à l'examen du Titre.</p>
+  </header>
+
+  <div class="section-label">// LES 3 TRAUMATISMES DENTAIRES À RECONNAÎTRE</div>
+
+  <div class="urgence-card" onclick="toggle(this)">
+    <div class="urgence-head">
+      <div class="urgence-icon">🚨</div>
+      <div>
+        <div class="urgence-title">Dent définitive expulsée</div>
+        <div class="urgence-sub">Vraie urgence — chaque minute compte</div>
+      </div>
+      <div class="urgence-chevron">▶</div>
+    </div>
+    <div class="urgence-body">
+      <b>Le pronostic dépend directement du délai</b> — une réimplantation dans les 30 minutes offre les meilleures chances de succès.
+      <ul>
+        <li><span class="do">✓</span> Récupérer la dent <b>par la couronne</b>, jamais par la racine</li>
+        <li><span class="dont">✗</span> Ne pas la nettoyer, ne pas la passer sous l'eau, aucun désinfectant</li>
+        <li><span class="do">✓</span> La conserver dans du <b>lait UHT peu gras</b>, de la salive, ou du sérum physiologique</li>
+        <li><span class="do">✓</span> Orienter vers une consultation <b>immédiate</b></li>
+      </ul>
+      <b>Attention :</b> une dent de lait (temporaire) expulsée ne se réimplante jamais — ce n'est pas une urgence de réimplantation, mais un suivi reste nécessaire.
+    </div>
+  </div>
+
+  <div class="urgence-card" onclick="toggle(this)">
+    <div class="urgence-head">
+      <div class="urgence-icon">🦷</div>
+      <div>
+        <div class="urgence-title">Dent fracturée</div>
+        <div class="urgence-sub">Consultation à organiser, pas toujours immédiate</div>
+      </div>
+      <div class="urgence-chevron">▶</div>
+    </div>
+    <div class="urgence-body">
+      <ul>
+        <li><span class="do">✓</span> Récupérer le(s) fragment(s), les conserver dans l'eau ou le sérum physiologique</li>
+        <li><span class="do">✓</span> Si le bord est tranchant : protéger langue/lèvres avec une gomme à mâcher sans sucre</li>
+        <li>Le dentiste pourra parfois recoller le fragment d'origine</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="urgence-card" onclick="toggle(this)">
+    <div class="urgence-head">
+      <div class="urgence-icon">⚠️</div>
+      <div>
+        <div class="urgence-title">Dent déplacée ou mobile (luxation)</div>
+        <div class="urgence-sub">Ne jamais manipuler soi-même</div>
+      </div>
+      <div class="urgence-chevron">▶</div>
+    </div>
+    <div class="urgence-body">
+      <ul>
+        <li><span class="dont">✗</span> Ne pas toucher la dent — un déplacement peut aggraver une fracture de la racine ou de l'alvéole</li>
+        <li><span class="dont">✗</span> Pas de bain de bouche</li>
+        <li><span class="do">✓</span> Consultation nécessaire</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="source-note">Source : UFSBD (Union Française pour la Santé Bucco-Dentaire), fiche conseil patient traumatismes</div>
+
+  <div class="alert-box">🚑 <strong>Toujours orienter vers le 15 (SAMU)</strong> si : accident grave, choc violent à la tête, perte de connaissance ou vomissements associés — la dent passe alors au second plan.</div>
+
+  <div class="section-label">// ENTRETIEN TÉLÉPHONIQUE — MÊME FORMAT QUE L'EXAMEN</div>
+
+  <div class="qcard">
+    <div class="call-type">📞 APPEL ENTRANT</div>
+    <div class="profil">Un patient appelle, paniqué : <i>"Mon fils de 9 ans vient de tomber du vélo, sa dent de devant est complètement sortie, elle est par terre dans la cour ! Qu'est-ce que je fais ?!"</i></div>
+    <button class="opt" onclick="reponse(this,false)">"Mettez la dent dans un mouchoir sec et venez au cabinet demain matin."</button>
+    <button class="opt" onclick="reponse(this,true)">"Ne la nettoyez pas : mettez-la dans du lait ou gardez-la dans sa salive, et venez immédiatement, c'est une urgence."</button>
+    <button class="opt" onclick="reponse(this,false)">"Rincez bien la dent à l'eau claire et rappelez-nous dans l'après-midi."</button>
+    <div class="explic">✅ Une dent définitive expulsée est une vraie urgence : conservation humide (lait/salive/sérum physiologique) sans nettoyage, et consultation immédiate — chaque minute réduit les chances de réimplantation.</div>
+  </div>
+
+  <div class="qcard">
+    <div class="call-type">📞 APPEL SORTANT</div>
+    <div class="profil">Vous rappelez Mme D. pour confirmer son rendez-vous de détartrage prévu demain à 14h. Elle vous répond qu'elle avait complètement oublié et qu'elle ne sait plus si elle est disponible.</div>
+    <button class="opt" onclick="reponse(this,false)">Insister pour qu'elle confirme tout de suite, sinon le rendez-vous sera annulé.</button>
+    <button class="opt" onclick="reponse(this,true)">Lui laisser un instant pour vérifier, et proposer un autre créneau si celui-ci ne convient plus.</button>
+    <button class="opt" onclick="reponse(this,false)">Raccrocher et noter le rendez-vous comme confirmé par défaut.</button>
+    <div class="explic">✅ L'accueil téléphonique reste courtois et adapté à la personne, même en cas d'imprévu — proposer une alternative fait partie de la gestion d'agenda, sans mettre de pression inutile sur le patient.</div>
+  </div>
+
+  <div class="note-box">
+    🚧 <strong>Chantier en cours :</strong> BC01 couvre aussi la communication adaptée (situations de handicap/fragilité) et les conseils d'éducation à la santé bucco-dentaire — à construire dans une prochaine session.
+  </div>
+
+  <footer>MEDEXPERT · PRAXIS · RNCP 38144</footer>
+</div>
+
+<script>
+function toggle(card){ card.classList.toggle('open'); }
+
+function reponse(btn, correct){
+  const card = btn.closest('.qcard');
+  if(card.dataset.done) return;
+  card.dataset.done = '1';
+  card.querySelectorAll('.opt').forEach(o => o.disabled = true);
+  btn.classList.add(correct ? 'ok' : 'ko');
+  card.querySelector('.explic').classList.add('show');
+}
+</script>
+</body>
+</html>
