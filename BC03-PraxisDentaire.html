@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PraxisDentaire · Assistant(e) Dentaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:      #fdfcfb;
+  --bg2:     #f4faf9;
+  --panel:   #ffffff;
+  --bdr:     #e2ede9;
+  --txt:     #1a2e2a;
+  --txt2:    #6b8580;
+  --mint:    #2dd4bf;
+  --mint-dk: #0d9488;
+  --coral:   #ff8a7a;
+  --amber:   #f5a623;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Poppins',system-ui,sans-serif;
+  background:
+    radial-gradient(ellipse 55% 40% at 90% 0%, rgba(45,212,191,.10) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 35% at 5% 100%, rgba(255,138,122,.08) 0%, transparent 50%),
+    linear-gradient(160deg, var(--bg) 0%, var(--bg2) 100%);
+  color:var(--txt); min-height:100vh; padding-bottom:60px;
+}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+.mono{font-family:'JetBrains Mono',monospace}
+
+header{padding:48px 0 30px;text-align:center}
+.icon-mark{width:64px;height:64px;margin:0 auto 16px}
+h1{font-weight:700;font-size:clamp(28px,6vw,40px);letter-spacing:-.5px}
+h1 span{color:var(--mint-dk)}
+.tagline{color:var(--txt2);font-size:14.5px;margin-top:10px;max-width:460px;margin-left:auto;margin-right:auto;line-height:1.6}
+
+.badge-row{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:22px}
+.badge-row span{
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.5px;
+  color:var(--mint-dk);background:rgba(45,212,191,.1);border:1px solid rgba(45,212,191,.3);
+  padding:5px 11px;border-radius:20px;
+}
+
+.section-label{
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;
+  color:var(--txt2);margin:36px 0 12px;padding-left:2px;
+}
+
+.blocs-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:520px){.blocs-grid{grid-template-columns:1fr}}
+.bloc-card{
+  background:var(--panel);border:1px solid var(--bdr);border-radius:14px;padding:18px;
+  box-shadow:0 2px 12px rgba(13,148,136,.05);position:relative;overflow:hidden;
+}
+.bloc-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--bc,var(--mint))}
+.bloc-code{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--bc,var(--mint-dk));font-weight:600;letter-spacing:.5px}
+.bloc-title{font-weight:600;font-size:16.5px;margin:6px 0 6px;line-height:1.25}
+.bloc-desc{font-size:12.5px;color:var(--txt2);line-height:1.55}
+
+.field-grid{display:grid;grid-template-columns:1fr;gap:10px}
+.field-card{
+  display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--bdr);
+  border-radius:12px;padding:14px 16px;text-decoration:none;color:var(--txt);
+  box-shadow:0 2px 10px rgba(13,148,136,.04);transition:transform .1s,box-shadow .15s;
+}
+.field-card:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(13,148,136,.09)}
+.field-icon{width:38px;height:38px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:18px;background:rgba(45,212,191,.1)}
+.field-body{flex:1}
+.field-title{font-weight:600;font-size:15.5px}
+.field-desc{font-size:12px;color:var(--txt2);margin-top:2px}
+.field-arrow{color:var(--mint-dk);font-size:14px}
+
+.note-box{
+  background:rgba(255,138,122,.08);border:1px solid rgba(255,138,122,.25);border-radius:12px;
+  padding:14px 16px;margin:26px 0 6px;font-size:12.5px;color:var(--txt);line-height:1.6;
+}
+.note-box strong{color:#e8604a}
+
+footer{text-align:center;padding:30px 20px 10px;color:var(--txt2);font-size:11px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <svg class="icon-mark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="miroirArgent" cx="38%" cy="32%" r="75%">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="35%" stop-color="#e6ecef"/>
+          <stop offset="70%" stop-color="#b8c4c9"/>
+          <stop offset="100%" stop-color="#8fa0a6"/>
+        </radialGradient>
+      </defs>
+      <g transform="rotate(-35 50 50)">
+        <rect x="47.5" y="18" width="5" height="55" rx="2.5" fill="#2dd4bf"/>
+        <path d="M 47.5,18 Q 42,10 48,6 Q 54,10 52.5,18 Z" fill="#2dd4bf"/>
+      </g>
+      <g transform="rotate(35 50 50)">
+        <rect x="47.5" y="27" width="5" height="46" rx="2.5" fill="#0d9488"/>
+        <circle cx="50" cy="16" r="11" fill="none" stroke="#0d9488" stroke-width="4"/>
+        <circle cx="50" cy="16" r="8.5" fill="url(#miroirArgent)"/>
+        <ellipse cx="46.5" cy="12.5" rx="2.6" ry="1.6" fill="#ffffff" opacity="0.9" transform="rotate(-30 46.5 12.5)"/>
+      </g>
+    </svg>
+    <h1>Praxis<span>Dentaire</span></h1>
+    <p class="tagline">Formation Assistant(e) Dentaire — accueil du patient, assistance au fauteuil, hygiène et gestion du cabinet.</p>
+    <div class="badge-row">
+      <span>TITRE PROFESSIONNEL · RNCP 38144</span>
+      <span>NIVEAU 4</span>
+    </div>
+  </header>
+
+  <div class="section-label">// LES 4 BLOCS DE COMPÉTENCES (RNCP 38144)</div>
+  <div class="blocs-grid">
+    <a class="bloc-card" href="BC01-PraxisDentaire.html" style="--bc:#2dd4bf;text-decoration:none;color:inherit;display:block">
+      <div class="bloc-code">BC01</div>
+      <div class="bloc-title">Prise en charge de la personne</div>
+      <div class="bloc-desc">Accueil, communication, conseils santé bucco-dentaire, repérage de l'urgence</div>
+    </a>
+    <a class="bloc-card" href="BC02-PraxisDentaire.html" style="--bc:#0d9488;text-decoration:none;color:inherit;display:block">
+      <div class="bloc-code">BC02</div>
+      <div class="bloc-title">Assister le praticien</div>
+      <div class="bloc-desc">Travail à 4 mains, installation du patient, radioprotection, gestes d'urgence</div>
+    </a>
+    <a class="bloc-card" href="BC03-PraxisDentaire.html" style="--bc:#ff8a7a;text-decoration:none;color:inherit;display:block">
+      <div class="bloc-code">BC03</div>
+      <div class="bloc-title">Hygiène, stocks & matériel</div>
+      <div class="bloc-desc">Stérilisation, décontamination, circuits déchets, gestion des stocks</div>
+    </a>
+    <div class="bloc-card" style="--bc:#f5a623">
+      <div class="bloc-code">BC04</div>
+      <div class="bloc-title">Activité, données & équipe</div>
+      <div class="bloc-desc">Dossier patient, agenda, devis, transmission labo, tutorat des stagiaires</div>
+    </div>
+  </div>
+
+  <div class="section-label">// RÉVISION & ENTRAÎNEMENT</div>
+  <div class="field-grid">
+    <a class="field-card" href="BC01-PraxisDentaire.html">
+      <div class="field-icon">🦷</div>
+      <div class="field-body">
+        <div class="field-title">Reconnaître l'urgence</div>
+        <div class="field-desc">Traumatismes dentaires, entretien téléphonique — BC01</div>
+      </div>
+      <div class="field-arrow">→</div>
+    </a>
+    <a class="field-card" href="BC02-PraxisDentaire.html">
+      <div class="field-icon">🤝</div>
+      <div class="field-body">
+        <div class="field-title">Travail à 4 mains & radioprotection</div>
+        <div class="field-desc">Positions horaires, transfert d'instruments, réglementation — BC02</div>
+      </div>
+      <div class="field-arrow">→</div>
+    </a>
+    <a class="field-card" href="BC03-PraxisDentaire.html">
+      <div class="field-icon">🧴</div>
+      <div class="field-body">
+        <div class="field-title">Stérilisation & déchets spécifiques</div>
+        <div class="field-desc">Chaîne de stérilisation classe B, déchets d'amalgame — BC03</div>
+      </div>
+      <div class="field-arrow">→</div>
+    </a>
+  </div>
+
+  <div class="note-box">
+    🚧 <strong>Chantier de démarrage :</strong> cet accueil pose l'architecture officielle (4 blocs RNCP 38144). Le contenu de chaque module reste à construire, bloc par bloc, avec la même exigence de vérification que sur les 5 autres apps.
+  </div>
+
+  <footer>MEDEXPERT · PRAXIS · RNCP 38144</footer>
+</div>
+</body>
+</html>
