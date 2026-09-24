@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PraxisDentaire · BC02 Assister le praticien</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fdfcfb; --bg2:#f4faf9; --panel:#ffffff; --bdr:#e2ede9;
+  --txt:#1a2e2a; --txt2:#6b8580; --mint:#2dd4bf; --mint-dk:#0d9488;
+  --coral:#ff8a7a; --red:#e8604a; --amber:#f5a623;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Poppins',system-ui,sans-serif;
+  background:linear-gradient(160deg,var(--bg) 0%,var(--bg2) 100%);
+  color:var(--txt);min-height:100vh;padding-bottom:60px;
+}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+
+.topbar{display:flex;align-items:center;gap:10px;padding:20px 0 6px}
+.back-link{display:flex;align-items:center;gap:6px;color:var(--txt2);text-decoration:none;font-size:13px}
+.back-link svg{width:20px;height:20px}
+
+header{padding:16px 0 24px}
+.bc-badge{
+  display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;
+  font-size:11.5px;letter-spacing:1px;color:var(--mint-dk);background:rgba(45,212,191,.1);
+  border:1px solid rgba(45,212,191,.3);padding:5px 12px;border-radius:20px;margin-bottom:12px;
+}
+h1{font-weight:700;font-size:clamp(24px,5.5vw,32px);letter-spacing:-.3px}
+.tagline{color:var(--txt2);font-size:14px;margin-top:8px;max-width:480px;line-height:1.6}
+
+.section-label{
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;
+  color:var(--txt2);margin:32px 0 12px;
+}
+
+.schema-card{background:var(--panel);border:1.5px solid var(--bdr);border-radius:16px;padding:20px;text-align:center;box-shadow:0 2px 10px rgba(13,148,136,.05)}
+.schema-card img{max-width:280px;width:100%;margin-bottom:14px}
+.schema-legend{text-align:left;font-size:13px;color:var(--txt2);line-height:1.7}
+.schema-legend b{color:var(--txt)}
+.zone-mint{display:inline-block;width:10px;height:10px;background:#ccf5ef;border-radius:2px;margin-right:6px}
+.zone-coral{display:inline-block;width:10px;height:10px;background:#ffdbd3;border-radius:2px;margin-right:6px}
+
+.note-left{
+  background:#fff7ed;border:1px solid #fbd9a5;border-radius:10px;padding:10px 14px;
+  margin-top:14px;font-size:12px;color:#8a5a0f;line-height:1.6;text-align:left;
+}
+
+.reg-card{background:var(--panel);border:1.5px solid var(--bdr);border-radius:14px;overflow:hidden;margin-bottom:10px;box-shadow:0 2px 10px rgba(13,148,136,.05)}
+.reg-head{display:flex;align-items:center;gap:12px;padding:15px 16px;cursor:pointer}
+.reg-icon{font-size:20px;flex-shrink:0}
+.reg-title{font-weight:600;font-size:15px}
+.reg-sub{font-size:11.5px;color:var(--txt2);margin-top:1px}
+.reg-chevron{margin-left:auto;color:var(--txt2);transition:transform .2s}
+.reg-card.open .reg-chevron{transform:rotate(90deg)}
+.reg-body{display:none;padding:0 16px 15px 48px;font-size:13px;color:var(--txt2);line-height:1.65}
+.reg-card.open .reg-body{display:block}
+.reg-body b{color:var(--txt)}
+.reg-body ul{padding-left:18px;margin-top:6px}
+.reg-body li{margin-bottom:5px}
+
+.source-note{font-size:11px;color:var(--txt2);text-align:right;margin-top:6px;font-style:italic}
+
+.qcard{background:var(--panel);border:1.5px solid var(--bdr);border-radius:14px;padding:18px;margin-bottom:14px;box-shadow:0 2px 10px rgba(13,148,136,.05)}
+.qcard .qtype{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:1px;color:var(--mint-dk);margin-bottom:8px}
+.qcard .profil{font-size:14.5px;margin-bottom:12px;line-height:1.55}
+.qcard .opt{display:block;width:100%;text-align:left;background:var(--bg2);border:1.5px solid var(--bdr);border-radius:10px;color:var(--txt);padding:11px 14px;margin-bottom:8px;font-size:13.5px;font-family:'Poppins',sans-serif;cursor:pointer;transition:border-color .15s}
+.qcard .opt:hover{border-color:var(--mint)}
+.qcard .opt.ok{border-color:var(--mint-dk);background:rgba(45,212,191,.12);color:var(--mint-dk);font-weight:600}
+.qcard .opt.ko{border-color:var(--red);background:rgba(232,96,74,.08);color:var(--red)}
+.qcard .explic{display:none;margin-top:10px;padding:12px 14px;border-radius:10px;background:rgba(45,212,191,.08);border:1px solid rgba(45,212,191,.25);font-size:13px;line-height:1.6}
+.qcard .explic.show{display:block}
+
+.note-box{
+  background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.3);border-radius:12px;
+  padding:14px 16px;margin:26px 0 6px;font-size:12.5px;color:var(--txt);line-height:1.6;
+}
+.note-box strong{color:#b8760f}
+
+footer{text-align:center;padding:30px 20px 10px;color:var(--txt2);font-size:11px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <a class="back-link" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      PraxisDentaire
+    </a>
+  </div>
+
+  <header>
+    <div class="bc-badge">BC02 · ASSISTER LE PRATICIEN</div>
+    <h1>Travail à 4 mains & radioprotection</h1>
+    <p class="tagline">Le cœur du métier au fauteuil, et une matière strictement réglementée — les deux volets techniques évalués à l'examen.</p>
+  </header>
+
+  <div class="section-label">// LE TRAVAIL À 4 MAINS : LES POSITIONS HORAIRES</div>
+  <div class="schema-card">
+    <img src="horloge-positions.png" alt="Schéma des positions horaires en travail à 4 mains">
+    <div class="schema-legend">
+      Le patient est toujours en position <b>12h</b>. Le praticien se place entre <b>7h et 12h</b> (selon qu'il est droitier ou gaucher), l'assistant(e) entre <b>2h et 4h</b>, face à lui.
+      <br><br>
+      <span class="zone-mint"></span> <b>Zone statique (12h-2h)</b> : matériel supplémentaire, non utilisé immédiatement.
+      <br>
+      <span class="zone-coral"></span> <b>Zone de transfert (4h-7h)</b> : c'est ici que l'assistant(e) transmet instruments et matériaux au praticien, sans que celui-ci ait à quitter la bouche du patient des yeux.
+    </div>
+    <div class="note-left">↔️ Ces positions s'inversent en miroir pour un praticien gaucher.</div>
+  </div>
+
+  <div class="section-label">// RADIOPROTECTION — UNE MATIÈRE RÉGLEMENTÉE</div>
+
+  <div class="reg-card" onclick="toggle(this)">
+    <div class="reg-head">
+      <div class="reg-icon">☢️</div>
+      <div>
+        <div class="reg-title">Ce que la loi impose au cabinet</div>
+        <div class="reg-sub">Déclaration, PCR, zonage</div>
+      </div>
+      <div class="reg-chevron">▶</div>
+    </div>
+    <div class="reg-body">
+      <ul>
+        <li>Tout appareil de radiographie dentaire (rétroalvéolaire ou panoramique) doit être <b>déclaré à l'ASN</b> (Autorité de Sûreté Nucléaire)</li>
+        <li>Une <b>Personne Compétente en Radioprotection (PCR)</b> doit être désignée — elle peut être externe au cabinet</li>
+        <li>Les locaux doivent faire l'objet d'un <b>zonage réglementé</b>, avec affichage visible du règlement d'accès</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reg-card" onclick="toggle(this)">
+    <div class="reg-head">
+      <div class="reg-icon">📛</div>
+      <div>
+        <div class="reg-title">Ce qui vous concerne directement</div>
+        <div class="reg-sub">Dosimètre et formation obligatoires</div>
+      </div>
+      <div class="reg-chevron">▶</div>
+    </div>
+    <div class="reg-body">
+      <ul>
+        <li>En tant qu'assistant(e), vous êtes un <b>travailleur exposé</b> dès que vous intervenez en zone surveillée ou contrôlée</li>
+        <li>Le <b>port du dosimètre passif est obligatoire</b> et systématique — les contrôles ASN vérifient spécifiquement ce point</li>
+        <li>Une <b>formation à la radioprotection</b> est obligatoire, à renouveler périodiquement</li>
+        <li>Un suivi médical accompagne ce statut de travailleur exposé</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="source-note">Sources : rapports d'inspection ASN (Autorité de Sûreté Nucléaire), Code du travail art. R.4451-50, R.4451-62, R.4451-103</div>
+
+  <div class="section-label">// ENTRAÎNEMENT</div>
+
+  <div class="qcard">
+    <div class="qtype">🦷 TRANSFERT D'INSTRUMENTS</div>
+    <div class="profil">Le praticien opère en bouche et tend la main vers vous sans quitter le champ opératoire des yeux. D'où doit venir l'instrument que vous lui transmettez ?</div>
+    <button class="opt" onclick="reponse(this,false)">De la zone statique, entre 12h et 2h</button>
+    <button class="opt" onclick="reponse(this,true)">De la zone de transfert, entre 4h et 7h</button>
+    <button class="opt" onclick="reponse(this,false)">Peu importe, du moment que le geste est rapide</button>
+    <div class="explic">✅ La zone de transfert (4h-7h) est précisément pensée pour ça : elle permet à l'assistant(e) de passer les instruments sans que le praticien ait à quitter la bouche du patient du regard.</div>
+  </div>
+
+  <div class="qcard">
+    <div class="qtype">☢️ RADIOPROTECTION (type QROC)</div>
+    <div class="profil">Une nouvelle assistante commence au cabinet. Le praticien lui dit qu'elle n'a pas besoin de dosimètre "vu qu'elle ne fait qu'assister, pas les radios elle-même". Qu'en pensez-vous ?</div>
+    <button class="opt" onclick="reponse(this,false)">Il a raison, seul celui qui déclenche l'appareil est concerné</button>
+    <button class="opt" onclick="reponse(this,true)">Faux — toute personne travaillant en zone surveillée/contrôlée est un travailleur exposé et doit porter un dosimètre</button>
+    <button class="opt" onclick="reponse(this,false)">Le dosimètre n'est utile qu'après plusieurs années d'exercice</button>
+    <div class="explic">✅ Le port du dosimètre passif concerne tout travailleur exposé présent en zone réglementée — les contrôles ASN ont spécifiquement relevé ce point sur des cabinets où l'assistante n'en portait pas.</div>
+  </div>
+
+  <div class="note-box">
+    🚧 <strong>Chantier en cours :</strong> BC02 couvre aussi l'installation du patient (dont la prise de vue radiographique), la préparation des plateaux par protocole, et les gestes d'urgence pendant les soins — à construire dans une prochaine session.
+  </div>
+
+  <footer>MEDEXPERT · PRAXIS · RNCP 38144</footer>
+</div>
+
+<script>
+function toggle(card){ card.classList.toggle('open'); }
+
+function reponse(btn, correct){
+  const card = btn.closest('.qcard');
+  if(card.dataset.done) return;
+  card.dataset.done = '1';
+  card.querySelectorAll('.opt').forEach(o => o.disabled = true);
+  btn.classList.add(correct ? 'ok' : 'ko');
+  card.querySelector('.explic').classList.add('show');
+}
+</script>
+</body>
+</html>
