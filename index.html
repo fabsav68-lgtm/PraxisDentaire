@@ -80,6 +80,15 @@ h1 span{color:var(--mint-dk)}
 
 footer{text-align:center;padding:30px 20px 10px;color:var(--txt2);font-size:11px}
 </style>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0d9488">
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('service-worker.js');
+  });
+}
+</script>
 </head>
 <body>
 <div class="wrap">
@@ -130,11 +139,11 @@ footer{text-align:center;padding:30px 20px 10px;color:var(--txt2);font-size:11px
       <div class="bloc-title">Hygiène, stocks & matériel</div>
       <div class="bloc-desc">Stérilisation, décontamination, circuits déchets, gestion des stocks</div>
     </a>
-    <div class="bloc-card" style="--bc:#f5a623">
+    <a class="bloc-card" href="BC04-PraxisDentaire.html" style="--bc:#f5a623;text-decoration:none;color:inherit;display:block">
       <div class="bloc-code">BC04</div>
       <div class="bloc-title">Activité, données & équipe</div>
       <div class="bloc-desc">Dossier patient, agenda, devis, transmission labo, tutorat des stagiaires</div>
-    </div>
+    </a>
   </div>
 
   <div class="section-label">// RÉVISION & ENTRAÎNEMENT</div>
@@ -163,13 +172,114 @@ footer{text-align:center;padding:30px 20px 10px;color:var(--txt2);font-size:11px
       </div>
       <div class="field-arrow">→</div>
     </a>
+    <a class="field-card" href="BC04-PraxisDentaire.html">
+      <div class="field-icon">📋</div>
+      <div class="field-body">
+        <div class="field-title">Le devis à 3 paniers</div>
+        <div class="field-desc">Réforme 100% Santé, dossier patient — BC04</div>
+      </div>
+      <div class="field-arrow">→</div>
+    </a>
+    <a class="field-card" href="PraxisLexique-Dentaire.html">
+      <div class="field-icon">📖</div>
+      <div class="field-body">
+        <div class="field-title">Lexique</div>
+        <div class="field-desc">Vocabulaire essentiel — anatomie, pathologies, actes, organisation</div>
+      </div>
+      <div class="field-arrow">→</div>
+    </a>
+    <a class="field-card" href="QCM-Dentaire.html">
+      <div class="field-icon">✅</div>
+      <div class="field-body">
+        <div class="field-title">QCM par bloc</div>
+        <div class="field-desc">5 questions par bloc, BC01 à BC04</div>
+      </div>
+      <div class="field-arrow">→</div>
+    </a>
+    <a class="field-card" href="#" onclick="ouvrirBinome();return false;" style="border-color:rgba(45,212,191,.4);background:rgba(45,212,191,.04)">
+      <div class="field-icon" style="background:rgba(45,212,191,.15)">🤝</div>
+      <div class="field-body">
+        <div class="field-title">Mon binôme</div>
+        <div class="field-desc">Se lier à un(e) autre étudiant(e) pour progresser à deux</div>
+      </div>
+      <div class="field-arrow">→</div>
+    </a>
   </div>
 
   <div class="note-box">
-    🚧 <strong>Chantier de démarrage :</strong> cet accueil pose l'architecture officielle (4 blocs RNCP 38144). Le contenu de chaque module reste à construire, bloc par bloc, avec la même exigence de vérification que sur les 5 autres apps.
+    ✅ <strong>Les 4 blocs de compétences ont chacun un premier contenu vérifié.</strong> Chaque module reste approfondissable — mais l'architecture complète de PraxisDentaire est posée.
   </div>
 
   <footer>MEDEXPERT · PRAXIS · RNCP 38144</footer>
 </div>
+
+<!-- MODALE BINÔME -->
+<div id="binome-overlay" style="display:none;position:fixed;inset:0;background:rgba(26,46,42,.5);z-index:300;align-items:center;justify-content:center;padding:20px">
+  <div style="background:#ffffff;border:1.5px solid #2dd4bf;border-radius:16px;padding:26px 22px;max-width:340px;width:100%;text-align:center;box-shadow:0 8px 30px rgba(13,148,136,.15)">
+    <h2 style="color:#0d9488;font-size:19px;margin-bottom:8px;font-weight:700">Mon binôme</h2>
+    <p style="color:#6b8580;font-size:12.5px;margin-bottom:16px;line-height:1.6">Entrez le code d'un(e) autre étudiant(e) abonné(e) à PraxisDentaire pour vous lier.</p>
+    <div id="binome-actuel" style="background:rgba(45,212,191,.08);border:1px solid rgba(45,212,191,.25);border-radius:8px;padding:10px;margin-bottom:14px;font-size:13px;color:#0d9488;display:none"></div>
+    <input id="binome-input" placeholder="DENTAIRE-BC01-001" style="width:100%;padding:11px;background:#f4faf9;border:1.5px solid #e2ede9;border-radius:8px;color:#1a2e2a;font-size:14px;text-align:center;text-transform:uppercase;font-family:'JetBrains Mono',monospace;margin-bottom:10px">
+    <button onclick="lierBinome()" style="width:100%;padding:11px;background:#0d9488;color:#fff;border:none;border-radius:8px;font-weight:600;font-size:14px;cursor:pointer;margin-bottom:8px;font-family:'Poppins',sans-serif">Lier ce binôme</button>
+    <div id="binome-msg" style="font-size:12px;margin-bottom:10px;min-height:16px"></div>
+    <button onclick="fermerBinome()" style="background:none;border:1.5px solid #e2ede9;color:#6b8580;padding:9px 20px;border-radius:8px;cursor:pointer;font-size:12.5px;font-family:'Poppins',sans-serif">Fermer</button>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL_BINOME = "https://fvrfiikrasezlzpaxpqz.supabase.co";
+const SUPABASE_KEY_BINOME = "sb_publishable_TNksbociGaWCY53M4wCAXg_faOxEqKt";
+
+function ouvrirBinome(){
+  document.getElementById('binome-overlay').style.display = 'flex';
+  const lie = localStorage.getItem('praxisdentaire_binome');
+  const actuel = document.getElementById('binome-actuel');
+  if(lie){
+    actuel.style.display = 'block';
+    actuel.textContent = 'Binôme actuel : ' + lie;
+  } else {
+    actuel.style.display = 'none';
+  }
+}
+
+function fermerBinome(){
+  document.getElementById('binome-overlay').style.display = 'none';
+  document.getElementById('binome-msg').textContent = '';
+}
+
+function lierBinome(){
+  const monCode = sessionStorage.getItem('praxisdentaire_code');
+  const cb = document.getElementById('binome-input').value.trim().toUpperCase();
+  const msg = document.getElementById('binome-msg');
+
+  if(!cb){ msg.style.color = '#e8604a'; msg.textContent = 'Entrez un code binôme.'; return; }
+  if(cb === monCode){ msg.style.color = '#e8604a'; msg.textContent = 'Vous ne pouvez pas vous lier à vous-même !'; return; }
+
+  msg.style.color = '#6b8580'; msg.textContent = 'Vérification...';
+
+  fetch(SUPABASE_URL_BINOME + '/functions/v1/verifier-acces', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY_BINOME, 'Authorization': 'Bearer ' + SUPABASE_KEY_BINOME },
+    body: JSON.stringify({ code: cb, app: 'PraxisDentaire' }),
+  })
+  .then(r => r.json())
+  .then(data => {
+    if(!data.valide){
+      msg.style.color = '#e8604a';
+      msg.textContent = "Ce code n'est pas un abonné actif de PraxisDentaire.";
+      return;
+    }
+    localStorage.setItem('praxisdentaire_binome', cb);
+    msg.style.color = '#0d9488';
+    msg.textContent = 'Binôme ' + cb + ' lié avec succès !';
+    document.getElementById('binome-actuel').style.display = 'block';
+    document.getElementById('binome-actuel').textContent = 'Binôme actuel : ' + cb;
+  })
+  .catch(() => {
+    msg.style.color = '#e8604a';
+    msg.textContent = 'Erreur de connexion, réessayez.';
+  });
+}
+</script>
 </body>
 </html>
