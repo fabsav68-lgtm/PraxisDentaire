@@ -1,0 +1,20 @@
+{
+  "name": "PraxisDentaire · Assistant(e) Dentaire",
+  "short_name": "PraxisDentaire",
+  "description": "Formation Assistant(e) Dentaire — RNCP 38144, 4 blocs de compétences",
+  "start_url": "./acces-dentaire.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fdfcfb",
+  "theme_color": "#0d9488",
+  "orientation": "portrait",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "apple-touch-icon-dentaire.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
