@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PraxisDentaire · Accès</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fdfcfb; --bg2:#f4faf9; --panel:#ffffff; --bdr:#e2ede9;
+  --txt:#1a2e2a; --txt2:#6b8580; --mint:#2dd4bf; --mint-dk:#0d9488; --red:#e8604a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Poppins',system-ui,sans-serif;
+  background:linear-gradient(160deg,var(--bg) 0%,var(--bg2) 100%);
+  color:var(--txt);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;
+}
+.wrap{max-width:400px;width:100%;text-align:center}
+.icon-mark{width:56px;height:56px;margin:0 auto 14px}
+.logo{font-weight:700;font-size:28px}
+.logo span{color:var(--mint-dk)}
+.sub{font-size:12px;letter-spacing:2px;color:var(--txt2);text-transform:uppercase;margin-top:6px;margin-bottom:26px}
+
+.card{background:var(--panel);border:1.5px solid var(--mint);border-radius:16px;padding:28px 24px;box-shadow:0 4px 20px rgba(13,148,136,.08)}
+.card h2{font-size:18px;margin-bottom:8px}
+.card p{font-size:13px;color:var(--txt2);line-height:1.6;margin-bottom:20px}
+
+input{
+  width:100%;padding:13px 16px;border-radius:10px;border:1.5px solid var(--bdr);
+  background:var(--bg2);color:var(--txt);font-size:15px;text-align:center;
+  letter-spacing:1px;text-transform:uppercase;font-family:'JetBrains Mono',monospace;
+  outline:none;margin-bottom:8px;
+}
+input:focus{border-color:var(--mint)}
+input.err{border-color:var(--red)}
+.msg-err{color:var(--red);font-size:12.5px;font-family:'JetBrains Mono',monospace;margin-bottom:14px;min-height:16px}
+
+button{
+  width:100%;padding:14px;border-radius:10px;border:none;
+  background:var(--mint-dk);color:#fff;font-size:15px;font-weight:600;cursor:pointer;
+  transition:opacity .15s;
+}
+button:hover{opacity:.9}
+button:disabled{opacity:.5;cursor:not-allowed}
+
+#msg-paiement{display:none;background:rgba(45,212,191,.1);border:1.5px solid var(--mint-dk);border-radius:10px;padding:14px 16px;margin-bottom:16px;font-size:13px;line-height:1.6;text-align:center}
+
+footer{margin-top:26px;font-size:10.5px;letter-spacing:1px;color:var(--txt2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <svg class="icon-mark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="miroirArgent" cx="38%" cy="32%" r="75%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="35%" stop-color="#e6ecef"/>
+        <stop offset="70%" stop-color="#b8c4c9"/>
+        <stop offset="100%" stop-color="#8fa0a6"/>
+      </radialGradient>
+    </defs>
+    <g transform="rotate(-35 50 50)">
+      <rect x="47.5" y="18" width="5" height="55" rx="2.5" fill="#2dd4bf"/>
+      <path d="M 47.5,18 Q 42,10 48,6 Q 54,10 52.5,18 Z" fill="#2dd4bf"/>
+    </g>
+    <g transform="rotate(35 50 50)">
+      <rect x="47.5" y="27" width="5" height="46" rx="2.5" fill="#0d9488"/>
+      <circle cx="50" cy="16" r="11" fill="none" stroke="#0d9488" stroke-width="4"/>
+      <circle cx="50" cy="16" r="8.5" fill="url(#miroirArgent)"/>
+      <ellipse cx="46.5" cy="12.5" rx="2.6" ry="1.6" fill="#ffffff" opacity="0.9" transform="rotate(-30 46.5 12.5)"/>
+    </g>
+  </svg>
+  <div class="logo">Praxis<span>Dentaire</span></div>
+  <div class="sub">Accès sécurisé</div>
+
+  <div id="msg-paiement"></div>
+
+  <div class="card">
+    <h2>🔒 Code d'accès</h2>
+    <p>Saisissez le code fourni par votre formateur pour accéder aux modules PraxisDentaire.</p>
+
+    <input type="text" id="code-input" placeholder="DENTAIRE-BC01-001" autocomplete="off" autocapitalize="characters">
+    <div class="msg-err" id="msg-err"></div>
+
+    <button id="btn-acceder" onclick="tenterAcces()">Accéder à PraxisDentaire →</button>
+  </div>
+
+  <footer>PRAXISDENTAIRE · MEDEXPERT · RNCP 38144</footer>
+</div>
+
+<script>
+const VERIF_CACHE_KEY = 'praxisdentaire_verif_cache';
+const VERIF_CACHE_DUREE_MS = 24 * 60 * 60 * 1000; // 24h
+
+function lireVerifCache(code){
+  try{
+    const brut = localStorage.getItem(VERIF_CACHE_KEY);
+    if(!brut) return null;
+    const data = JSON.parse(brut);
+    if(data.code !== code) return null;
+    return data;
+  }catch(e){ return null; }
+}
+
+function ecrireVerifCache(code, resultat){
+  try{
+    localStorage.setItem(VERIF_CACHE_KEY, JSON.stringify({
+      code: code, resultat: resultat, verifiedAt: Date.now(),
+    }));
+  }catch(e){ }
+}
+
+async function verifierAccesAvecCache(code, app){
+  const cache = lireVerifCache(code);
+  const cacheEncoreValide = cache && (Date.now() - cache.verifiedAt) < VERIF_CACHE_DUREE_MS;
+
+  if(cacheEncoreValide){
+    console.log('Accès vérifié depuis le cache local (moins de 24h)');
+    return cache.resultat;
+  }
+
+  try{
+    const reponse = await fetch('https://fvrfiikrasezlzpaxpqz.supabase.co/functions/v1/verifier-acces', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': 'sb_publishable_TNksbociGaWCY53M4wCAXg_faOxEqKt',
+        'Authorization': 'Bearer sb_publishable_TNksbociGaWCY53M4wCAXg_faOxEqKt',
+      },
+      body: JSON.stringify({ code, app }),
+    });
+    const resultat = await reponse.json();
+    if(resultat.valide){
+      ecrireVerifCache(code, resultat);
+    }
+    return resultat;
+  }catch(erreurReseau){
+    if(cache){
+      console.log('Hors-ligne : reprise du dernier résultat connu, vérification différée');
+      return cache.resultat;
+    }
+    return { valide:false, message:'Connexion requise pour la première vérification de ce code' };
+  }
+}
+
+async function tenterAcces(){
+  const input = document.getElementById('code-input');
+  const btn = document.getElementById('btn-acceder');
+  const msgErr = document.getElementById('msg-err');
+  const code = input.value.trim().toUpperCase();
+
+  msgErr.textContent = '';
+  input.classList.remove('err');
+
+  if(!code){
+    msgErr.textContent = 'Veuillez saisir un code.';
+    input.classList.add('err');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Vérification...';
+
+  const resultat = await verifierAccesAvecCache(code, 'PraxisDentaire');
+
+  btn.disabled = false;
+  btn.textContent = 'Accéder à PraxisDentaire →';
+
+  if(!resultat.valide){
+    msgErr.textContent = 'Code non reconnu ou inactif';
+    input.classList.add('err');
+    return;
+  }
+
+  sessionStorage.setItem('praxisdentaire_code', code);
+  if(resultat.annee) sessionStorage.setItem('praxisdentaire_annee', resultat.annee);
+
+  window.location.href = 'index.html';
+}
+
+document.getElementById('code-input').addEventListener('keydown', function(e){
+  if(e.key === 'Enter') tenterAcces();
+});
+
+// Message de confirmation après retour de paiement Stripe (pour quand la page d'achat existera)
+(function(){
+  const params = new URLSearchParams(window.location.search);
+  const statut = params.get('paiement');
+  const zone = document.getElementById('msg-paiement');
+  if(!zone) return;
+
+  if(statut === 'succes'){
+    zone.style.display = 'block';
+    zone.innerHTML = '✅ <strong>Paiement réussi !</strong><br>Votre code d\'accès arrive par email dans quelques instants.';
+  } else if(statut === 'annule'){
+    zone.style.display = 'block';
+    zone.style.background = 'rgba(232,96,74,.08)';
+    zone.style.borderColor = 'var(--red)';
+    zone.innerHTML = 'Paiement annulé — vous pouvez réessayer quand vous le souhaitez.';
+  }
+
+  if(statut){
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+})();
+</script>
+</body>
+</html>
