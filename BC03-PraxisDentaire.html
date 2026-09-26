@@ -95,7 +95,7 @@ footer{text-align:center;padding:30px 20px 10px;color:var(--txt2);font-size:11px
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="wrap" id="app">
 
   <div class="topbar">
     <a class="back-link" href="index.html">
@@ -273,6 +273,15 @@ footer{text-align:center;padding:30px 20px 10px;color:var(--txt2);font-size:11px
   <footer>MEDEXPERT · PRAXIS · RNCP 38144</footer>
 </div>
 
+<button id="btn-audio" onclick="lireOnglet()" style="
+  position:fixed;bottom:20px;right:20px;z-index:1000;
+  background:#2dd4bf;border:none;border-radius:50px;
+  color:#07211d;font-size:13px;font-weight:700;
+  padding:11px 18px;cursor:pointer;
+  box-shadow:0 4px 16px rgba(45,212,191,.35);
+  font-family:'Poppins',sans-serif;letter-spacing:.3px;
+  white-space:nowrap;transition:opacity .2s">🔊 Écouter</button>
+
 <script>
 function toggle(card){ card.classList.toggle('open'); }
 
@@ -285,5 +294,8 @@ function reponse(btn, correct){
   card.querySelector('.explic').classList.add('show');
 }
 </script>
+
+<script>window.PRAXIS_AUDIO_SELECTOR = 'h1, .tagline, .chaine-step, .alert-box, .reg-title, .reg-sub, .reg-body, .qtype, .profil, .opt, .explic, .source-note, .note-box, .bd-title, .bd-caption';</script>
+<script src="praxis-audio.js"></script>
 </body>
 </html>
