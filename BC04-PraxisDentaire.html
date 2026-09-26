@@ -294,6 +294,24 @@ footer{text-align:center;padding:30px 20px 10px;color:var(--txt2);font-size:11px
     <div class="explic">✅ Face à une erreur de planning, la transparence et une solution concrète immédiate valent toujours mieux qu'une justification a posteriori ou un silence qui aggrave la situation.</div>
   </div>
 
+  <div class="qcard">
+    <div class="qtype">🗂️ DOSSIER PATIENT MINEUR</div>
+    <div class="profil">Un patient était mineur lors de sa dernière prise en charge, il y a 19 ans. La règle des 20 ans arriverait à échéance avant son 28ᵉ anniversaire. Que faites-vous ?</div>
+    <button class="opt" onclick="reponse(this,false)">Archiver dès les 20 ans révolus, la règle est la même pour tous</button>
+    <button class="opt" onclick="reponse(this,true)">Prolonger la conservation jusqu'à son 28ᵉ anniversaire</button>
+    <button class="opt" onclick="reponse(this,false)">Archiver immédiatement, la minorité ne change rien après 19 ans</button>
+    <div class="explic">✅ Si le délai de 20 ans expire avant que le patient (mineur au moment des faits) n'atteigne 28 ans, la conservation est prolongée jusqu'à cette date.</div>
+  </div>
+
+  <div class="qcard">
+    <div class="qtype">🎓 TUTORAT</div>
+    <div class="profil">Une stagiaire a préparé un plateau incomplet avant l'arrivée du patient. Quelle formulation de retour est la plus adaptée ?</div>
+    <button class="opt" onclick="reponse(this,true)">"Le plateau n'avait pas la sonde parodontale avant l'installation du patient — on vérifie ensemble la liste la prochaine fois ?"</button>
+    <button class="opt" onclick="reponse(this,false)">"Tu n'es vraiment pas assez organisée pour ce métier."</button>
+    <button class="opt" onclick="reponse(this,false)">Ne rien dire pour ne pas la décourager, elle finira par comprendre seule</button>
+    <div class="explic">✅ Un retour utile porte sur un fait précis et observé, jamais sur la personne, et s'accompagne d'une proposition concrète pour la fois suivante.</div>
+  </div>
+
   <div class="note-box">
     ✅ <strong>BC04 est maintenant couvert dans ses grandes lignes</strong> : devis et paniers 100% Santé, transmission laboratoire, agenda, dossier patient, tutorat. Le détail exact des logiciels métier (agenda, dossier patient informatisé) varie d'un cabinet à l'autre et s'apprend surtout en stage.
   </div>
