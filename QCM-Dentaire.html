@@ -108,8 +108,8 @@ footer{text-align:center;padding:30px 20px 10px;color:var(--txt2);font-size:11px
       <p class="tagline">Le référentiel de certification prévoit de vraies épreuves écrites chronométrées (QCM/QROC, 30 minutes) — ces missions reproduisent ce rythme.</p>
     </header>
 
-    <div class="note-box">
-      📌 <strong>16 questions actuellement disponibles</strong> (4 par bloc BC01-BC04). La banque s'enrichira au fil des prochaines sessions — les missions ci-dessous piochent dans ce qui existe déjà, sans répétition dans une même session.
+    <div class="note-box" id="note-total">
+      📌 <strong>Chargement…</strong>
     </div>
 
     <div class="section-label">// MISSIONS GÉNÉRALES</div>
@@ -118,7 +118,7 @@ footer{text-align:center;padding:30px 20px 10px;color:var(--txt2);font-size:11px
       <div class="mission-top">
         <div class="mission-icon">🌱</div>
         <div class="mission-title">Échauffement</div>
-        <div class="mission-meta">8 questions · 45s</div>
+        <div class="mission-meta" id="meta-echauffement">… · 45s</div>
       </div>
       <div class="mission-desc">Un aperçu des 4 blocs, à un rythme confortable pour démarrer.</div>
     </div>
@@ -127,7 +127,7 @@ footer{text-align:center;padding:30px 20px 10px;color:var(--txt2);font-size:11px
       <div class="mission-top">
         <div class="mission-icon">⚡</div>
         <div class="mission-title">Rythme examen</div>
-        <div class="mission-meta">16 questions · 35s</div>
+        <div class="mission-meta" id="meta-rythme">… · 35s</div>
       </div>
       <div class="mission-desc">L'intégralité de la banque actuelle, à un rythme plus soutenu.</div>
     </div>
@@ -136,7 +136,7 @@ footer{text-align:center;padding:30px 20px 10px;color:var(--txt2);font-size:11px
       <div class="mission-top">
         <div class="mission-icon">📋</div>
         <div class="mission-title">Épreuve blanche (30 min)</div>
-        <div class="mission-meta">16 questions · ~110s</div>
+        <div class="mission-meta" id="meta-epreuve">… · …s</div>
       </div>
       <div class="mission-desc">Le rythme réel d'une épreuve écrite QCM/QROC du référentiel — 30 minutes réparties sur l'ensemble des questions disponibles.</div>
     </div>
@@ -145,19 +145,19 @@ footer{text-align:center;padding:30px 20px 10px;color:var(--txt2);font-size:11px
     <div class="bc-grid">
       <div class="mission-card" onclick="lancerMission('bc01')">
         <div class="mission-top"><div class="mission-icon">🦷</div><div class="mission-title">BC01</div></div>
-        <div class="mission-desc">4 questions · 30s — Prise en charge de la personne</div>
+        <div class="mission-desc" id="desc-bc01">… questions · 30s — Prise en charge de la personne</div>
       </div>
       <div class="mission-card" onclick="lancerMission('bc02')">
         <div class="mission-top"><div class="mission-icon">🤝</div><div class="mission-title">BC02</div></div>
-        <div class="mission-desc">4 questions · 30s — Assister le praticien</div>
+        <div class="mission-desc" id="desc-bc02">… questions · 30s — Assister le praticien</div>
       </div>
       <div class="mission-card" onclick="lancerMission('bc03')">
         <div class="mission-top"><div class="mission-icon">🧴</div><div class="mission-title">BC03</div></div>
-        <div class="mission-desc">4 questions · 30s — Hygiène & risque infectieux</div>
+        <div class="mission-desc" id="desc-bc03">… questions · 30s — Hygiène & risque infectieux</div>
       </div>
       <div class="mission-card" onclick="lancerMission('bc04')">
         <div class="mission-top"><div class="mission-icon">📋</div><div class="mission-title">BC04</div></div>
-        <div class="mission-desc">4 questions · 30s — Activité, données & équipe</div>
+        <div class="mission-desc" id="desc-bc04">… questions · 30s — Activité, données & équipe</div>
       </div>
     </div>
   </div>
@@ -205,12 +205,30 @@ function toutesLesQuestions(){
   return ['bc01','bc02','bc03','bc04'].flatMap(bc => BANQUE_DENTAIRE[bc].map(q => ({...q, bc})));
 }
 
+function initMenu(){
+  const total = toutesLesQuestions().length;
+  const parBloc = Math.round(total / 4);
+  document.getElementById('note-total').innerHTML =
+    `📌 <strong>${total} questions actuellement disponibles</strong> (${parBloc} par bloc BC01-BC04 en moyenne). La banque s'enrichira au fil des prochaines sessions — les missions ci-dessous piochent dans ce qui existe déjà, sans répétition dans une même session.`;
+  document.getElementById('meta-echauffement').textContent = `${Math.min(8, total)} questions · 45s`;
+  document.getElementById('meta-rythme').textContent = `${total} questions · 35s`;
+  const tempsEpreuve = Math.max(20, Math.round(1800 / total));
+  document.getElementById('meta-epreuve').textContent = `${total} questions · ~${tempsEpreuve}s`;
+  ['bc01','bc02','bc03','bc04'].forEach(bc => {
+    const el = document.getElementById('desc-' + bc);
+    const n = BANQUE_DENTAIRE[bc].length;
+    el.textContent = el.textContent.replace(/^…\s*questions/, `${n} question${n > 1 ? 's' : ''}`);
+  });
+}
+document.addEventListener('DOMContentLoaded', initMenu);
+
 function lancerMission(id){
   const toutes = toutesLesQuestions();
+  const total = toutes.length;
   let qs, temps;
   if(id === 'echauffement'){ qs = melangeSansRepetition(toutes, 8); temps = 45; }
-  else if(id === 'rythme'){ qs = melangeSansRepetition(toutes, 16); temps = 35; }
-  else if(id === 'epreuve'){ qs = melangeSansRepetition(toutes, 16); temps = 110; }
+  else if(id === 'rythme'){ qs = melangeSansRepetition(toutes, total); temps = 35; }
+  else if(id === 'epreuve'){ qs = melangeSansRepetition(toutes, total); temps = Math.max(20, Math.round(1800 / total)); }
   else { qs = BANQUE_DENTAIRE[id].map(q => ({...q, bc:id})); temps = 30; }
 
   session = { questions: qs, index: 0, score: 0, timePerQ: temps, missionId: id };
