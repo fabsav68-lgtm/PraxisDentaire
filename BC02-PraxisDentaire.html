@@ -255,6 +255,24 @@ footer{text-align:center;padding:30px 20px 10px;color:var(--txt2);font-size:11px
     <div class="explic">✅ Tout appareil de radiographie dentaire impose un zonage réglementé des locaux, avec un affichage visible du règlement d'accès — c'est un point vérifié lors des contrôles ASN.</div>
   </div>
 
+  <div class="qcard">
+    <div class="qtype">☢️ PCR</div>
+    <div class="profil">Le cabinet doit désigner une Personne Compétente en Radioprotection (PCR). Laquelle de ces affirmations est exacte ?</div>
+    <button class="opt" onclick="reponse(this,false)">Elle doit obligatoirement être un membre salarié du cabinet</button>
+    <button class="opt" onclick="reponse(this,true)">Elle peut être externe au cabinet</button>
+    <button class="opt" onclick="reponse(this,false)">Sa désignation n'est obligatoire qu'au-delà de 3 praticiens</button>
+    <div class="explic">✅ La PCR peut être une personne externe au cabinet (souvent un prestataire spécialisé) — ce qui est la situation la plus fréquente dans les petites structures.</div>
+  </div>
+
+  <div class="qcard">
+    <div class="qtype">🤝 TRAVAIL À 4 MAINS</div>
+    <div class="profil">Pour un praticien droitier, où l'assistant(e) se positionne-t-il/elle habituellement autour du patient (positionné à 12h) ?</div>
+    <button class="opt" onclick="reponse(this,true)">Entre 2h et 4h, face au praticien</button>
+    <button class="opt" onclick="reponse(this,false)">Entre 9h et 11h, du même côté que le praticien</button>
+    <button class="opt" onclick="reponse(this,false)">Derrière la tête du patient, à 12h</button>
+    <div class="explic">✅ L'assistant(e) se place entre 2h et 4h, face au praticien (lui-même entre 7h et 12h pour un droitier) — ces positions s'inversent en miroir pour un praticien gaucher.</div>
+  </div>
+
   <div class="note-box">
     ✅ <strong>BC02 est maintenant couvert dans ses grandes lignes</strong> : positions horaires, radioprotection, geste d'urgence principal, et le principe d'organisation des soins. Le détail exact de chaque protocole (instruments précis par type d'acte) demandera un vrai temps d'observation en stage — un contenu numérique ne peut pas tout remplacer sur ce point.
   </div>
