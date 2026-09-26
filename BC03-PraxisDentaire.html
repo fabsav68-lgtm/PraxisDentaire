@@ -230,6 +230,24 @@ footer{text-align:center;padding:30px 20px 10px;color:var(--txt2);font-size:11px
     <div class="bd-caption">Gants, champs, compresses : un contrôle régulier évite la rupture en plein soin. Un point à date fixe avec le praticien, sur la base d'un seuil de réapprovisionnement par référence, reste la méthode la plus simple à tenir au quotidien.</div>
   </div>
 
+  <div class="qcard">
+    <div class="qtype">🧴 CHAÎNE DE STÉRILISATION</div>
+    <div class="profil">Un instrument vient d'être utilisé sur un patient. Quelle est la toute première étape à respecter, immédiatement après usage ?</div>
+    <button class="opt" onclick="reponse(this,true)">La pré-désinfection, dans un bain détergent-désinfectant sans aldéhydes</button>
+    <button class="opt" onclick="reponse(this,false)">Le conditionnement direct sous sachet</button>
+    <button class="opt" onclick="reponse(this,false)">Le passage immédiat en autoclave</button>
+    <div class="explic">✅ La pré-désinfection est la première des 4 étapes, immédiatement après usage — elle précède le nettoyage, le conditionnement puis la stérilisation proprement dite.</div>
+  </div>
+
+  <div class="qcard">
+    <div class="qtype">🧴 ENTRETIEN DU BAIN</div>
+    <div class="profil">À quelle fréquence minimale le bain de pré-désinfection doit-il être renouvelé ?</div>
+    <button class="opt" onclick="reponse(this,false)">Une fois par semaine suffit</button>
+    <button class="opt" onclick="reponse(this,true)">Au moins une fois par jour — davantage selon le fabricant ou le nombre d'instruments traités</button>
+    <button class="opt" onclick="reponse(this,false)">Uniquement lorsque le bain change visiblement de couleur</button>
+    <div class="explic">✅ Le renouvellement quotidien est le minimum réglementaire — il doit être plus fréquent si le fabricant l'indique ou si le volume d'instruments traités l'impose.</div>
+  </div>
+
   <div class="note-box">
     🚧 <strong>Reste à construire dans BC03 :</strong> le circuit DASRI classique (compresses, aiguilles, EPI), et le tri des autres déchets du cabinet.
   </div>
