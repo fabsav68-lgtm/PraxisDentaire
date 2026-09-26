@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PraxisDentaire · Situations</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fdfcfb; --bg2:#f4faf9; --panel:#ffffff; --bdr:#e2ede9;
+  --txt:#1a2e2a; --txt2:#6b8580; --mint:#2dd4bf; --mint-dk:#0d9488;
+  --coral:#ff8a7a; --red:#e8604a; --amber:#f5a623;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Poppins',system-ui,sans-serif;
+  background:linear-gradient(160deg,var(--bg) 0%,var(--bg2) 100%);
+  color:var(--txt);min-height:100vh;padding-bottom:60px;
+}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+
+.topbar{display:flex;align-items:center;gap:10px;padding:20px 0 6px}
+.back-link{display:flex;align-items:center;gap:6px;color:var(--txt2);text-decoration:none;font-size:13px}
+.back-link svg{width:20px;height:20px}
+
+header{padding:16px 0 20px}
+.bc-badge{
+  display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;
+  font-size:11.5px;letter-spacing:1px;color:var(--mint-dk);background:rgba(45,212,191,.1);
+  border:1px solid rgba(45,212,191,.3);padding:5px 12px;border-radius:20px;margin-bottom:12px;
+}
+h1{font-weight:700;font-size:clamp(24px,5.5vw,32px);letter-spacing:-.3px}
+.tagline{color:var(--txt2);font-size:14px;margin-top:8px;max-width:480px;line-height:1.6}
+
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 20px}
+.filter-btn{
+  font-family:'JetBrains Mono',monospace;font-size:11.5px;padding:7px 14px;border-radius:20px;
+  border:1.5px solid var(--bdr);background:var(--panel);color:var(--txt2);cursor:pointer;
+}
+.filter-btn.active{background:var(--mint-dk);border-color:var(--mint-dk);color:#fff}
+
+.sit-card{background:var(--panel);border:1.5px solid var(--bdr);border-radius:14px;margin-bottom:12px;overflow:hidden;box-shadow:0 2px 10px rgba(13,148,136,.05)}
+.sit-card.hidden{display:none}
+.sit-head{display:flex;align-items:center;gap:12px;padding:16px;cursor:pointer}
+.sit-icon{font-size:24px;flex-shrink:0}
+.sit-body{flex:1}
+.sit-bc{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.5px;color:var(--mint-dk);margin-bottom:3px}
+.sit-title{font-weight:700;font-size:15px}
+.sit-chevron{color:var(--txt2);font-size:13px;transition:transform .2s}
+.sit-card.open .sit-chevron{transform:rotate(90deg)}
+.sit-context{padding:0 16px 14px 52px;font-size:13.5px;color:var(--txt);line-height:1.55}
+.sit-detail{display:none;padding:0 16px 16px 52px}
+.sit-card.open .sit-detail{display:block}
+.sit-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.5px;color:var(--mint-dk);margin-bottom:6px;margin-top:4px}
+.sit-label.sit-piege{color:var(--red);margin-top:14px}
+.sit-detail ul{padding-left:18px;margin-bottom:4px}
+.sit-detail li{font-size:13px;color:var(--txt2);line-height:1.6;margin-bottom:4px}
+.sit-piege-text{font-size:13px;color:var(--txt);background:rgba(232,96,74,.07);border:1px solid rgba(232,96,74,.25);border-radius:8px;padding:10px 12px;line-height:1.55}
+
+.note-box{
+  background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.3);border-radius:12px;
+  padding:14px 16px;margin:20px 0;font-size:12.5px;color:var(--txt);line-height:1.6;
+}
+.note-box strong{color:#b8760f}
+
+footer{text-align:center;padding:30px 20px 10px;color:var(--txt2);font-size:11px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <a class="back-link" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      PraxisDentaire
+    </a>
+  </div>
+
+  <header>
+    <div class="bc-badge">🎭 SITUATIONS</div>
+    <h1>S'entraîner à l'oral</h1>
+    <p class="tagline">L'examen repose surtout sur des mises en situation et des entretiens avec un jury, pas seulement sur des QCM. Ces 8 cas s'entraînent à l'oral : lisez le contexte, formulez votre réponse à voix haute, puis vérifiez.</p>
+  </header>
+
+  <div class="filters">
+    <button class="filter-btn active" onclick="filtrer('all', this)">Tous</button>
+    <button class="filter-btn" onclick="filtrer('bc01', this)">BC01</button>
+    <button class="filter-btn" onclick="filtrer('bc02', this)">BC02</button>
+    <button class="filter-btn" onclick="filtrer('bc03', this)">BC03</button>
+    <button class="filter-btn" onclick="filtrer('bc04', this)">BC04</button>
+  </div>
+
+  <div class="sit-card" data-bc="bc01">
+    <div class="sit-head" onclick="toggleSit(this)">
+      <div class="sit-icon">☎️</div>
+      <div class="sit-body">
+        <div class="sit-bc">BC01 · Prise en charge</div>
+        <div class="sit-title">Question médicale déguisée en petite conversation</div>
+      </div>
+      <div class="sit-chevron">▶</div>
+    </div>
+    <div class="sit-context">En salle d&#x27;attente, une patiente enceinte vous confie être inquiète : elle a une radio panoramique prévue aujourd&#x27;hui et ne sait pas si c&#x27;est risqué pour son bébé.</div>
+    <div class="sit-detail">
+      <div class="sit-label">✅ Points attendus par le jury</div>
+      <ul><li>Ne jamais répondre soi-même sur le plan médical, même pour rassurer</li><li>Transmettre l&#x27;information au praticien avant tout examen radio</li><li>Rester dans un rôle d&#x27;écoute et d&#x27;orientation, pas de validation médicale</li></ul>
+      <div class="sit-label sit-piege">⚠️ Piège classique</div>
+      <div class="sit-piege-text">Répondre &quot;ça ne pose aucun problème&quot; pour la rassurer vite — c&#x27;est un avis médical qui n&#x27;est pas de votre ressort.</div>
+    </div>
+  </div>
+  <div class="sit-card" data-bc="bc01">
+    <div class="sit-head" onclick="toggleSit(this)">
+      <div class="sit-icon">😠</div>
+      <div class="sit-body">
+        <div class="sit-bc">BC01 · Prise en charge</div>
+        <div class="sit-title">Patient excédé en salle d&#x27;attente</div>
+      </div>
+      <div class="sit-chevron">▶</div>
+    </div>
+    <div class="sit-context">Un patient hausse le ton devant les autres personnes présentes : cela fait 40 minutes qu&#x27;il attend et il menace de partir.</div>
+    <div class="sit-detail">
+      <div class="sit-label">✅ Points attendus par le jury</div>
+      <ul><li>Rester calme, ne pas entrer dans la confrontation</li><li>Vérifier discrètement l&#x27;origine du retard plutôt que de deviner</li><li>Proposer une option concrète (patienter encore un peu, ou reprogrammer)</li><li>Ne jamais évoquer le contenu d&#x27;un autre dossier patient pour se justifier</li></ul>
+      <div class="sit-label sit-piege">⚠️ Piège classique</div>
+      <div class="sit-piege-text">Se justifier longuement devant les autres patients, au risque de révéler des informations sur le planning d&#x27;un autre patient.</div>
+    </div>
+  </div>
+  <div class="sit-card" data-bc="bc02">
+    <div class="sit-head" onclick="toggleSit(this)">
+      <div class="sit-icon">🧰</div>
+      <div class="sit-body">
+        <div class="sit-bc">BC02 · Assister le praticien</div>
+        <div class="sit-title">Instrument introuvable en plein soin</div>
+      </div>
+      <div class="sit-chevron">▶</div>
+    </div>
+    <div class="sit-context">Le praticien, en pleine extraction, vous demande un instrument précis. Vous ne le trouvez pas immédiatement sur le plateau préparé.</div>
+    <div class="sit-detail">
+      <div class="sit-label">✅ Points attendus par le jury</div>
+      <ul><li>Rester silencieux et concentré, ne pas paniquer à voix haute</li><li>Chercher une alternative équivalente si elle existe</li><li>Prévenir clairement et brièvement si le geste doit attendre</li></ul>
+      <div class="sit-label sit-piege">⚠️ Piège classique</div>
+      <div class="sit-piege-text">Interrompre longuement le soin en s&#x27;excusant, ou improviser un geste qui n&#x27;est pas de votre rôle.</div>
+    </div>
+  </div>
+  <div class="sit-card" data-bc="bc02">
+    <div class="sit-head" onclick="toggleSit(this)">
+      <div class="sit-icon">😵</div>
+      <div class="sit-body">
+        <div class="sit-bc">BC02 · Assister le praticien</div>
+        <div class="sit-title">Malaise en cours de soin</div>
+      </div>
+      <div class="sit-chevron">▶</div>
+    </div>
+    <div class="sit-context">Pendant un soin, vous remarquez que le patient pâlit et transpire, alors que le praticien est concentré sur un geste technique.</div>
+    <div class="sit-detail">
+      <div class="sit-label">✅ Points attendus par le jury</div>
+      <ul><li>Signaler immédiatement et calmement au praticien</li><li>Basculer le fauteuil en position horizontale dès que possible</li><li>Rester auprès du patient, surveiller pouls et respiration</li></ul>
+      <div class="sit-label sit-piege">⚠️ Piège classique</div>
+      <div class="sit-piege-text">Attendre la fin du geste en cours avant de signaler quoi que ce soit.</div>
+    </div>
+  </div>
+  <div class="sit-card" data-bc="bc03">
+    <div class="sit-head" onclick="toggleSit(this)">
+      <div class="sit-icon">🧴</div>
+      <div class="sit-body">
+        <div class="sit-bc">BC03 · Hygiène &amp; stocks</div>
+        <div class="sit-title">Bain de pré-désinfection oublié</div>
+      </div>
+      <div class="sit-chevron">▶</div>
+    </div>
+    <div class="sit-context">Vous découvrez que le bain de pré-désinfection n&#x27;a pas été changé depuis deux jours — un oubli d&#x27;un collègue de l&#x27;équipe.</div>
+    <div class="sit-detail">
+      <div class="sit-label">✅ Points attendus par le jury</div>
+      <ul><li>Le signaler et le changer avant toute nouvelle utilisation</li><li>Ne jamais couvrir l&#x27;erreur pour éviter un conflit avec le collègue</li><li>Vérifier qu&#x27;aucun instrument n&#x27;a été traité dans de mauvaises conditions</li></ul>
+      <div class="sit-label sit-piege">⚠️ Piège classique</div>
+      <div class="sit-piege-text">Continuer à l&#x27;utiliser &quot;pour aujourd&#x27;hui&quot; en se disant que ça ne changera rien.</div>
+    </div>
+  </div>
+  <div class="sit-card" data-bc="bc03">
+    <div class="sit-head" onclick="toggleSit(this)">
+      <div class="sit-icon">🧤</div>
+      <div class="sit-body">
+        <div class="sit-bc">BC03 · Hygiène &amp; stocks</div>
+        <div class="sit-title">Rupture de stock en pleine journée</div>
+      </div>
+      <div class="sit-chevron">▶</div>
+    </div>
+    <div class="sit-context">En plein après-midi de consultations, il ne reste plus de gants à la bonne taille pour l&#x27;un des praticiens.</div>
+    <div class="sit-detail">
+      <div class="sit-label">✅ Points attendus par le jury</div>
+      <ul><li>Vérifier immédiatement s&#x27;il existe un stock de secours ailleurs dans le cabinet</li><li>Informer le praticien sans attendre</li><li>Passer une commande en urgence plutôt que d&#x27;improviser</li></ul>
+      <div class="sit-label sit-piege">⚠️ Piège classique</div>
+      <div class="sit-piege-text">Faire porter une taille inadaptée, ou reporter un soin sans en informer personne.</div>
+    </div>
+  </div>
+  <div class="sit-card" data-bc="bc04">
+    <div class="sit-head" onclick="toggleSit(this)">
+      <div class="sit-icon">🔒</div>
+      <div class="sit-body">
+        <div class="sit-bc">BC04 · Activité &amp; données</div>
+        <div class="sit-title">Demande de transmission de dossier par un tiers</div>
+      </div>
+      <div class="sit-chevron">▶</div>
+    </div>
+    <div class="sit-context">Un patient appelle et demande que son dossier médical soit envoyé directement par email à son nouvel employeur, &quot;pour lui rendre service&quot;.</div>
+    <div class="sit-detail">
+      <div class="sit-label">✅ Points attendus par le jury</div>
+      <ul><li>Rappeler que le dossier ne peut être transmis qu&#x27;au patient lui-même, ou avec son autorisation écrite explicite</li><li>Ne jamais transmettre à un tiers sans validation du praticien</li><li>Rester dans le cadre du secret professionnel, même face à une demande qui semble anodine</li></ul>
+      <div class="sit-label sit-piege">⚠️ Piège classique</div>
+      <div class="sit-piege-text">Envoyer l&#x27;information tout de suite pour &quot;rendre service&quot;, sans vérifier les règles de confidentialité.</div>
+    </div>
+  </div>
+  <div class="sit-card" data-bc="bc04">
+    <div class="sit-head" onclick="toggleSit(this)">
+      <div class="sit-icon">📦</div>
+      <div class="sit-body">
+        <div class="sit-bc">BC04 · Activité &amp; données</div>
+        <div class="sit-title">Retard laboratoire non anticipé</div>
+      </div>
+      <div class="sit-chevron">▶</div>
+    </div>
+    <div class="sit-context">Le laboratoire de prothèse appelle pour signaler un retard sur une prothèse déjà promise au patient, dont le rendez-vous de pose est dans deux jours.</div>
+    <div class="sit-detail">
+      <div class="sit-label">✅ Points attendus par le jury</div>
+      <ul><li>Prévenir le praticien sans attendre</li><li>Anticiper l&#x27;information auprès du patient plutôt que de le laisser découvrir le retard sur place</li><li>Proposer une solution concrète (report du rendez-vous de pose)</li></ul>
+      <div class="sit-label sit-piege">⚠️ Piège classique</div>
+      <div class="sit-piege-text">Ne rien dire et laisser le patient découvrir le retard le jour du rendez-vous.</div>
+    </div>
+  </div>
+
+  <div class="note-box">
+    💡 <strong>Comment s'en servir</strong> : lisez le contexte, énoncez votre réponse à voix haute comme devant un jury, puis ouvrez la fiche pour comparer avec les points attendus et le piège classique.
+  </div>
+
+  <footer>MEDEXPERT · PRAXIS · RNCP 38144</footer>
+</div>
+
+<script>
+function toggleSit(head){
+  head.closest('.sit-card').classList.toggle('open');
+}
+function filtrer(bc, btn){
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.sit-card').forEach(card => {
+    card.classList.toggle('hidden', bc !== 'all' && card.dataset.bc !== bc);
+  });
+}
+</script>
+</body>
+</html>
