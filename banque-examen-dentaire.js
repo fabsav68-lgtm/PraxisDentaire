@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PraxisDentaire · Examen chronométré</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fdfcfb; --bg2:#f4faf9; --panel:#ffffff; --bdr:#e2ede9;
+  --txt:#1a2e2a; --txt2:#6b8580; --mint:#2dd4bf; --mint-dk:#0d9488;
+  --coral:#ff8a7a; --red:#e8604a; --amber:#f5a623;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Poppins',system-ui,sans-serif;
+  background:linear-gradient(160deg,var(--bg) 0%,var(--bg2) 100%);
+  color:var(--txt);min-height:100vh;padding-bottom:60px;
+}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+
+.topbar{display:flex;align-items:center;gap:10px;padding:20px 0 6px}
+.back-link{display:flex;align-items:center;gap:6px;color:var(--txt2);text-decoration:none;font-size:13px;background:none;border:none;cursor:pointer;font-family:'Poppins',sans-serif}
+.back-link svg{width:20px;height:20px}
+
+header{padding:16px 0 20px}
+.bc-badge{
+  display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;
+  font-size:11.5px;letter-spacing:1px;color:var(--mint-dk);background:rgba(45,212,191,.1);
+  border:1px solid rgba(45,212,191,.3);padding:5px 12px;border-radius:20px;margin-bottom:12px;
+}
+h1{font-weight:700;font-size:clamp(24px,5.5vw,32px);letter-spacing:-.3px}
+.tagline{color:var(--txt2);font-size:14px;margin-top:8px;max-width:480px;line-height:1.6}
+
+.note-box{
+  background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.3);border-radius:12px;
+  padding:14px 16px;margin:18px 0;font-size:12.5px;color:var(--txt);line-height:1.6;
+}
+.note-box strong{color:#b8760f}
+
+.section-label{
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;
+  color:var(--txt2);margin:28px 0 12px;
+}
+
+.mission-card{
+  background:var(--panel);border:1.5px solid var(--bdr);border-radius:14px;padding:18px;
+  margin-bottom:12px;box-shadow:0 2px 10px rgba(13,148,136,.05);cursor:pointer;transition:border-color .15s;
+}
+.mission-card:hover{border-color:var(--mint)}
+.mission-top{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.mission-icon{font-size:22px}
+.mission-title{font-weight:700;font-size:15.5px}
+.mission-meta{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--mint-dk);margin-left:auto;text-align:right;white-space:nowrap}
+.mission-desc{font-size:13px;color:var(--txt2);line-height:1.55;margin-left:34px}
+
+.bc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:480px){.bc-grid{grid-template-columns:1fr}}
+
+/* ---- Quiz screen ---- */
+#quiz-screen{display:none}
+.quiz-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.quiz-progress{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--txt2)}
+.timer{
+  font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:700;color:var(--mint-dk);
+  background:rgba(45,212,191,.1);border:1.5px solid rgba(45,212,191,.3);border-radius:20px;padding:4px 14px;
+}
+.timer.urgent{color:var(--red);background:rgba(232,96,74,.1);border-color:rgba(232,96,74,.35)}
+.progress-bar{height:5px;background:var(--bdr);border-radius:3px;overflow:hidden;margin-bottom:20px}
+.progress-fill{height:100%;background:var(--mint);transition:width .2s linear}
+
+.q-type{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:1px;color:var(--mint-dk);margin-bottom:8px}
+.q-text{font-size:16px;line-height:1.55;margin-bottom:18px;font-weight:500}
+.q-opt{display:block;width:100%;text-align:left;background:var(--panel);border:1.5px solid var(--bdr);border-radius:12px;color:var(--txt);padding:13px 16px;margin-bottom:10px;font-size:14px;font-family:'Poppins',sans-serif;cursor:pointer;transition:border-color .15s;box-shadow:0 2px 8px rgba(13,148,136,.04)}
+.q-opt:hover{border-color:var(--mint)}
+.q-opt.ok{border-color:var(--mint-dk);background:rgba(45,212,191,.12);color:var(--mint-dk);font-weight:600}
+.q-opt.ko{border-color:var(--red);background:rgba(232,96,74,.08);color:var(--red)}
+.q-opt:disabled{cursor:default}
+.q-explic{display:none;margin-top:6px;padding:14px 16px;border-radius:12px;background:rgba(45,212,191,.08);border:1px solid rgba(45,212,191,.25);font-size:13.5px;line-height:1.6}
+.q-explic.show{display:block}
+.next-btn{display:none;margin-top:16px;width:100%;padding:13px;background:var(--mint-dk);color:#fff;border:none;border-radius:12px;font-weight:600;font-size:14.5px;cursor:pointer;font-family:'Poppins',sans-serif}
+.next-btn.show{display:block}
+
+/* ---- Result screen ---- */
+#result-screen{display:none;text-align:center;padding-top:20px}
+.result-score{font-size:52px;font-weight:700;color:var(--mint-dk);margin:14px 0 4px}
+.result-label{color:var(--txt2);font-size:14px;margin-bottom:24px}
+.result-btn{display:inline-block;padding:13px 28px;background:var(--mint-dk);color:#fff;border:none;border-radius:12px;font-weight:600;font-size:14.5px;cursor:pointer;font-family:'Poppins',sans-serif;margin:6px}
+.result-btn.secondary{background:var(--panel);color:var(--txt);border:1.5px solid var(--bdr)}
+
+footer{text-align:center;padding:30px 20px 10px;color:var(--txt2);font-size:11px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <a class="back-link" href="index.html" id="back-to-app">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      PraxisDentaire
+    </a>
+  </div>
+
+  <div id="menu-screen">
+    <header>
+      <div class="bc-badge">⏱️ EXAMEN CHRONOMÉTRÉ</div>
+      <h1>S'entraîner dans les conditions de l'examen</h1>
+      <p class="tagline">Le référentiel de certification prévoit de vraies épreuves écrites chronométrées (QCM/QROC, 30 minutes) — ces missions reproduisent ce rythme.</p>
+    </header>
+
+    <div class="note-box">
+      📌 <strong>16 questions actuellement disponibles</strong> (4 par bloc BC01-BC04). La banque s'enrichira au fil des prochaines sessions — les missions ci-dessous piochent dans ce qui existe déjà, sans répétition dans une même session.
+    </div>
+
+    <div class="section-label">// MISSIONS GÉNÉRALES</div>
+
+    <div class="mission-card" onclick="lancerMission('echauffement')">
+      <div class="mission-top">
+        <div class="mission-icon">🌱</div>
+        <div class="mission-title">Échauffement</div>
+        <div class="mission-meta">8 questions · 45s</div>
+      </div>
+      <div class="mission-desc">Un aperçu des 4 blocs, à un rythme confortable pour démarrer.</div>
+    </div>
+
+    <div class="mission-card" onclick="lancerMission('rythme')">
+      <div class="mission-top">
+        <div class="mission-icon">⚡</div>
+        <div class="mission-title">Rythme examen</div>
+        <div class="mission-meta">16 questions · 35s</div>
+      </div>
+      <div class="mission-desc">L'intégralité de la banque actuelle, à un rythme plus soutenu.</div>
+    </div>
+
+    <div class="mission-card" onclick="lancerMission('epreuve')">
+      <div class="mission-top">
+        <div class="mission-icon">📋</div>
+        <div class="mission-title">Épreuve blanche (30 min)</div>
+        <div class="mission-meta">16 questions · ~110s</div>
+      </div>
+      <div class="mission-desc">Le rythme réel d'une épreuve écrite QCM/QROC du référentiel — 30 minutes réparties sur l'ensemble des questions disponibles.</div>
+    </div>
+
+    <div class="section-label">// PAR BLOC DE COMPÉTENCES</div>
+    <div class="bc-grid">
+      <div class="mission-card" onclick="lancerMission('bc01')">
+        <div class="mission-top"><div class="mission-icon">🦷</div><div class="mission-title">BC01</div></div>
+        <div class="mission-desc">4 questions · 30s — Prise en charge de la personne</div>
+      </div>
+      <div class="mission-card" onclick="lancerMission('bc02')">
+        <div class="mission-top"><div class="mission-icon">🤝</div><div class="mission-title">BC02</div></div>
+        <div class="mission-desc">4 questions · 30s — Assister le praticien</div>
+      </div>
+      <div class="mission-card" onclick="lancerMission('bc03')">
+        <div class="mission-top"><div class="mission-icon">🧴</div><div class="mission-title">BC03</div></div>
+        <div class="mission-desc">4 questions · 30s — Hygiène & risque infectieux</div>
+      </div>
+      <div class="mission-card" onclick="lancerMission('bc04')">
+        <div class="mission-top"><div class="mission-icon">📋</div><div class="mission-title">BC04</div></div>
+        <div class="mission-desc">4 questions · 30s — Activité, données & équipe</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="quiz-screen">
+    <div class="quiz-top">
+      <div class="quiz-progress" id="quiz-progress">Question 1/8</div>
+      <div class="timer" id="timer">45</div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="q-type" id="q-type"></div>
+    <div class="q-text" id="q-text"></div>
+    <div id="q-options"></div>
+    <div class="q-explic" id="q-explic"></div>
+    <button class="next-btn" id="next-btn" onclick="questionSuivante()">Question suivante →</button>
+  </div>
+
+  <div id="result-screen">
+    <div class="bc-badge">✅ TERMINÉ</div>
+    <div class="result-score" id="result-score">0/0</div>
+    <div class="result-label" id="result-label">bonnes réponses</div>
+    <button class="result-btn" onclick="retourMenu()">Retour aux missions</button>
+    <button class="result-btn secondary" onclick="relancerMeme()">Refaire cette mission</button>
+  </div>
+
+  <footer>MEDEXPERT · PRAXIS · RNCP 38144</footer>
+</div>
+
+<script src="banque-examen-dentaire.js"></script>
+<script>
+let session = { questions: [], index: 0, score: 0, timePerQ: 30, missionId: '' };
+let timerInterval = null;
+let timeLeft = 0;
+
+function melangeSansRepetition(pool, n){
+  const copie = [...pool];
+  for(let i = copie.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [copie[i], copie[j]] = [copie[j], copie[i]];
+  }
+  return copie.slice(0, Math.min(n, copie.length));
+}
+
+function toutesLesQuestions(){
+  return ['bc01','bc02','bc03','bc04'].flatMap(bc => BANQUE_DENTAIRE[bc].map(q => ({...q, bc})));
+}
+
+function lancerMission(id){
+  const toutes = toutesLesQuestions();
+  let qs, temps;
+  if(id === 'echauffement'){ qs = melangeSansRepetition(toutes, 8); temps = 45; }
+  else if(id === 'rythme'){ qs = melangeSansRepetition(toutes, 16); temps = 35; }
+  else if(id === 'epreuve'){ qs = melangeSansRepetition(toutes, 16); temps = 110; }
+  else { qs = BANQUE_DENTAIRE[id].map(q => ({...q, bc:id})); temps = 30; }
+
+  session = { questions: qs, index: 0, score: 0, timePerQ: temps, missionId: id };
+  document.getElementById('menu-screen').style.display = 'none';
+  document.getElementById('result-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'block';
+  afficherQuestion();
+}
+
+function afficherQuestion(){
+  clearInterval(timerInterval);
+  const q = session.questions[session.index];
+  document.getElementById('quiz-progress').textContent = `Question ${session.index + 1}/${session.questions.length}`;
+  document.getElementById('q-type').textContent = (LABELS_BC[q.bc] || '').toUpperCase();
+  document.getElementById('q-text').textContent = q.q;
+  document.getElementById('progress-fill').style.width = (session.index / session.questions.length * 100) + '%';
+
+  const optsDiv = document.getElementById('q-options');
+  optsDiv.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'q-opt';
+    btn.textContent = opt;
+    btn.onclick = () => repondre(i);
+    optsDiv.appendChild(btn);
+  });
+
+  document.getElementById('q-explic').className = 'q-explic';
+  document.getElementById('q-explic').textContent = '';
+  document.getElementById('next-btn').className = 'next-btn';
+
+  timeLeft = session.timePerQ;
+  majTimer();
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    majTimer();
+    if(timeLeft <= 0){ clearInterval(timerInterval); repondre(-1); }
+  }, 1000);
+}
+
+function majTimer(){
+  const el = document.getElementById('timer');
+  el.textContent = timeLeft;
+  el.classList.toggle('urgent', timeLeft <= 10);
+}
+
+function repondre(choix){
+  clearInterval(timerInterval);
+  const q = session.questions[session.index];
+  const opts = document.querySelectorAll('.q-opt');
+  opts.forEach((btn, i) => {
+    btn.disabled = true;
+    if(i === q.correct) btn.classList.add('ok');
+    else if(i === choix) btn.classList.add('ko');
+  });
+  if(choix === q.correct) session.score++;
+  const explic = document.getElementById('q-explic');
+  explic.textContent = choix === -1 ? '⏱️ Temps écoulé — ' + q.expl : q.expl;
+  explic.classList.add('show');
+  document.getElementById('next-btn').classList.add('show');
+  document.getElementById('progress-fill').style.width = ((session.index + 1) / session.questions.length * 100) + '%';
+}
+
+function questionSuivante(){
+  session.index++;
+  if(session.index >= session.questions.length){ afficherResultat(); }
+  else { afficherQuestion(); }
+}
+
+function afficherResultat(){
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('result-screen').style.display = 'block';
+  document.getElementById('result-score').textContent = `${session.score}/${session.questions.length}`;
+  const pct = Math.round(session.score / session.questions.length * 100);
+  document.getElementById('result-label').textContent = `bonnes réponses (${pct}%)`;
+}
+
+function retourMenu(){
+  document.getElementById('result-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('menu-screen').style.display = 'block';
+}
+
+function relancerMeme(){
+  lancerMission(session.missionId);
+}
+</script>
+</body>
+</html>
