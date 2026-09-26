@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PraxisDentaire · Lexique</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fdfcfb; --bg2:#f4faf9; --panel:#ffffff; --bdr:#e2ede9;
+  --txt:#1a2e2a; --txt2:#6b8580; --mint:#2dd4bf; --mint-dk:#0d9488;
+  --coral:#ff8a7a; --red:#e8604a; --amber:#f5a623;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Poppins',system-ui,sans-serif;
+  background:linear-gradient(160deg,var(--bg) 0%,var(--bg2) 100%);
+  color:var(--txt);min-height:100vh;padding-bottom:60px;
+}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+
+.topbar{display:flex;align-items:center;gap:10px;padding:20px 0 6px}
+.back-link{display:flex;align-items:center;gap:6px;color:var(--txt2);text-decoration:none;font-size:13px}
+.back-link svg{width:20px;height:20px}
+
+header{padding:16px 0 20px}
+.bc-badge{
+  display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;
+  font-size:11.5px;letter-spacing:1px;color:var(--mint-dk);background:rgba(45,212,191,.1);
+  border:1px solid rgba(45,212,191,.3);padding:5px 12px;border-radius:20px;margin-bottom:12px;
+}
+h1{font-weight:700;font-size:clamp(24px,5.5vw,32px);letter-spacing:-.3px}
+.tagline{color:var(--txt2);font-size:14px;margin-top:8px;max-width:480px;line-height:1.6}
+
+.search-box{position:sticky;top:0;z-index:5;background:var(--bg);padding:14px 0;margin-bottom:6px}
+.search-box input{
+  width:100%;padding:13px 16px;border:1.5px solid var(--bdr);border-radius:12px;
+  font-family:'Poppins',sans-serif;font-size:15px;color:var(--txt);background:var(--panel);
+  box-shadow:0 2px 10px rgba(13,148,136,.05);
+}
+.search-box input:focus{outline:none;border-color:var(--mint)}
+.result-count{font-size:11.5px;color:var(--txt2);margin:8px 2px 4px;font-family:'JetBrains Mono',monospace}
+
+.term-card{background:var(--panel);border:1.5px solid var(--bdr);border-radius:12px;padding:14px 16px;margin-bottom:8px;box-shadow:0 2px 8px rgba(13,148,136,.04)}
+.term-name{font-weight:700;font-size:14.5px;color:var(--mint-dk);margin-bottom:4px}
+.term-def{font-size:13px;color:var(--txt);line-height:1.55}
+.term-card.hidden{display:none}
+
+.empty-state{text-align:center;color:var(--txt2);font-size:13.5px;padding:30px 10px;display:none}
+
+footer{text-align:center;padding:30px 20px 10px;color:var(--txt2);font-size:11px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <a class="back-link" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      PraxisDentaire
+    </a>
+  </div>
+
+  <header>
+    <div class="bc-badge">📖 LEXIQUE</div>
+    <h1>Vocabulaire de l'assistant dentaire</h1>
+    <p class="tagline">Anatomie, pathologies, actes et organisation du cabinet — 31 termes essentiels, tous blocs confondus.</p>
+  </header>
+
+  <div class="search-box">
+    <input type="text" id="search" placeholder="Rechercher un terme..." oninput="filtrer()" autocomplete="off">
+  </div>
+  <div class="result-count" id="count">31 termes</div>
+
+  <div id="liste">
+    <div class="term-card" data-term="afgsu" data-def="attestation de formation aux gestes et soins d&#x27;urgence. l&#x27;assistant(e) dentaire doit être titulaire du niveau 2 — elle est intégrée à la certification du titre.">
+      <div class="term-name">AFGSU</div>
+      <div class="term-def">Attestation de Formation aux Gestes et Soins d&#x27;Urgence. L&#x27;assistant(e) dentaire doit être titulaire du niveau 2 — elle est intégrée à la certification du titre.</div>
+    </div>
+    <div class="term-card" data-term="amalgame dentaire" data-def="matériau d&#x27;obturation contenant environ 50% de mercure. ses déchets suivent une filière spécifique obligatoire (séparateur d&#x27;amalgame, élimination par établissement agréé) — jamais la poubelle classique ni l&#x27;évier.">
+      <div class="term-name">Amalgame dentaire</div>
+      <div class="term-def">Matériau d&#x27;obturation contenant environ 50% de mercure. Ses déchets suivent une filière spécifique obligatoire (séparateur d&#x27;amalgame, élimination par établissement agréé) — jamais la poubelle classique ni l&#x27;évier.</div>
+    </div>
+    <div class="term-card" data-term="anesthésie locale" data-def="injection qui insensibilise une zone limitée avant un soin. peut déclencher une appréhension importante chez le patient, parfois jusqu&#x27;au malaise vagal.">
+      <div class="term-name">Anesthésie locale</div>
+      <div class="term-def">Injection qui insensibilise une zone limitée avant un soin. Peut déclencher une appréhension importante chez le patient, parfois jusqu&#x27;au malaise vagal.</div>
+    </div>
+    <div class="term-card" data-term="asn" data-def="autorité de sûreté nucléaire. tout appareil de radiographie dentaire doit lui être déclaré, et elle contrôle notamment le port du dosimètre par le personnel exposé.">
+      <div class="term-name">ASN</div>
+      <div class="term-def">Autorité de Sûreté Nucléaire. Tout appareil de radiographie dentaire doit lui être déclaré, et elle contrôle notamment le port du dosimètre par le personnel exposé.</div>
+    </div>
+    <div class="term-card" data-term="autoclave classe b" data-def="appareil de stérilisation par vide fractionné, seul capable de traiter les instruments creux (turbines, contre-angles) — cycle type 134°c/18 min.">
+      <div class="term-name">Autoclave classe B</div>
+      <div class="term-def">Appareil de stérilisation par vide fractionné, seul capable de traiter les instruments creux (turbines, contre-angles) — cycle type 134°C/18 min.</div>
+    </div>
+    <div class="term-card" data-term="bridge" data-def="prothèse fixe qui remplace une ou plusieurs dents manquantes en prenant appui sur les dents voisines.">
+      <div class="term-name">Bridge</div>
+      <div class="term-def">Prothèse fixe qui remplace une ou plusieurs dents manquantes en prenant appui sur les dents voisines.</div>
+    </div>
+    <div class="term-card" data-term="carie" data-def="lésion évolutive de l&#x27;émail puis de la dentine, causée par les acides produits par les bactéries de la plaque dentaire.">
+      <div class="term-name">Carie</div>
+      <div class="term-def">Lésion évolutive de l&#x27;émail puis de la dentine, causée par les acides produits par les bactéries de la plaque dentaire.</div>
+    </div>
+    <div class="term-card" data-term="champ opératoire (digue dentaire)" data-def="feuille en latex ou silicone isolant une ou plusieurs dents du reste de la bouche pendant un soin, pour la sécurité et l&#x27;asepsie.">
+      <div class="term-name">Champ opératoire (digue dentaire)</div>
+      <div class="term-def">Feuille en latex ou silicone isolant une ou plusieurs dents du reste de la bouche pendant un soin, pour la sécurité et l&#x27;asepsie.</div>
+    </div>
+    <div class="term-card" data-term="cpnefp" data-def="commission paritaire nationale de l&#x27;emploi et de la formation professionnelle des cabinets dentaires — certificateur du titre d&#x27;assistant dentaire.">
+      <div class="term-name">CPNEFP</div>
+      <div class="term-def">Commission Paritaire Nationale de l&#x27;Emploi et de la Formation Professionnelle des cabinets dentaires — certificateur du titre d&#x27;assistant dentaire.</div>
+    </div>
+    <div class="term-card" data-term="dasri" data-def="déchets d&#x27;activités de soins à risques infectieux (compresses, aiguilles, epi usagés) — circuit d&#x27;élimination distinct des ordures ménagères.">
+      <div class="term-name">DASRI</div>
+      <div class="term-def">Déchets d&#x27;Activités de Soins à Risques Infectieux (compresses, aiguilles, EPI usagés) — circuit d&#x27;élimination distinct des ordures ménagères.</div>
+    </div>
+    <div class="term-card" data-term="dentine" data-def="tissu dentaire situé sous l&#x27;émail, plus sensible que celui-ci car traversé de canalicules reliés à la pulpe.">
+      <div class="term-name">Dentine</div>
+      <div class="term-def">Tissu dentaire situé sous l&#x27;émail, plus sensible que celui-ci car traversé de canalicules reliés à la pulpe.</div>
+    </div>
+    <div class="term-card" data-term="dmsm" data-def="dispositif médical sur mesure — statut réglementaire de la prothèse dentaire, fabriquée sur prescription écrite du praticien pour un patient déterminé.">
+      <div class="term-name">DMSM</div>
+      <div class="term-def">Dispositif Médical Sur Mesure — statut réglementaire de la prothèse dentaire, fabriquée sur prescription écrite du praticien pour un patient déterminé.</div>
+    </div>
+    <div class="term-card" data-term="dosimètre" data-def="appareil individuel qui mesure l&#x27;exposition aux rayonnements ionisants. son port est obligatoire pour tout travailleur exposé, y compris l&#x27;assistant(e) dentaire.">
+      <div class="term-name">Dosimètre</div>
+      <div class="term-def">Appareil individuel qui mesure l&#x27;exposition aux rayonnements ionisants. Son port est obligatoire pour tout travailleur exposé, y compris l&#x27;assistant(e) dentaire.</div>
+    </div>
+    <div class="term-card" data-term="détartrage" data-def="élimination du tartre (plaque calcifiée) sur les dents, au-dessus et légèrement sous la gencive, à l&#x27;aide d&#x27;un insert à ultrasons.">
+      <div class="term-name">Détartrage</div>
+      <div class="term-def">Élimination du tartre (plaque calcifiée) sur les dents, au-dessus et légèrement sous la gencive, à l&#x27;aide d&#x27;un insert à ultrasons.</div>
+    </div>
+    <div class="term-card" data-term="empreinte" data-def="enregistrement de la forme des dents et des tissus environnants (physique ou numérique), transmis au laboratoire pour fabriquer une prothèse.">
+      <div class="term-name">Empreinte</div>
+      <div class="term-def">Enregistrement de la forme des dents et des tissus environnants (physique ou numérique), transmis au laboratoire pour fabriquer une prothèse.</div>
+    </div>
+    <div class="term-card" data-term="gingivite" data-def="inflammation réversible de la gencive, le plus souvent liée à l&#x27;accumulation de plaque dentaire — stade précédant la parodontite si elle n&#x27;est pas traitée.">
+      <div class="term-name">Gingivite</div>
+      <div class="term-def">Inflammation réversible de la gencive, le plus souvent liée à l&#x27;accumulation de plaque dentaire — stade précédant la parodontite si elle n&#x27;est pas traitée.</div>
+    </div>
+    <div class="term-card" data-term="handident" data-def="dispositif dédié à l&#x27;accès aux soins bucco-dentaires des personnes en situation de handicap.">
+      <div class="term-name">HANDIDENT</div>
+      <div class="term-def">Dispositif dédié à l&#x27;accès aux soins bucco-dentaires des personnes en situation de handicap.</div>
+    </div>
+    <div class="term-card" data-term="malaise vagal (syncope vasovagale)" data-def="chute de tension et ralentissement du cœur déclenchés par le stress, la douleur ou la vue du sang. conduite à tenir : basculer le fauteuil en position horizontale, surveiller pouls et respiration.">
+      <div class="term-name">Malaise vagal (syncope vasovagale)</div>
+      <div class="term-def">Chute de tension et ralentissement du cœur déclenchés par le stress, la douleur ou la vue du sang. Conduite à tenir : basculer le fauteuil en position horizontale, surveiller pouls et respiration.</div>
+    </div>
+    <div class="term-card" data-term="méthode bros" data-def="technique de brossage enseignée aux patients dès 6 ans : brosser haut/bas séparément, mouvement en rouleau, brosse oblique à 45°, brossage systématique de toutes les faces.">
+      <div class="term-name">Méthode BROS</div>
+      <div class="term-def">Technique de brossage enseignée aux patients dès 6 ans : Brosser haut/bas séparément, mouvement en Rouleau, brosse Oblique à 45°, brossage Systématique de toutes les faces.</div>
+    </div>
+    <div class="term-card" data-term="obturation" data-def="comblement d&#x27;une cavité créée par une carie, après élimination des tissus atteints, à l&#x27;aide d&#x27;un matériau (composite, amalgame...).">
+      <div class="term-name">Obturation</div>
+      <div class="term-def">Comblement d&#x27;une cavité créée par une carie, après élimination des tissus atteints, à l&#x27;aide d&#x27;un matériau (composite, amalgame...).</div>
+    </div>
+    <div class="term-card" data-term="panier 100% santé (rac 0)" data-def="l&#x27;un des 3 paniers de soins du devis dentaire, garantissant un reste à charge zéro pour le patient sur une sélection de prothèses aux tarifs plafonnés.">
+      <div class="term-name">Panier 100% Santé (RAC 0)</div>
+      <div class="term-def">L&#x27;un des 3 paniers de soins du devis dentaire, garantissant un reste à charge zéro pour le patient sur une sélection de prothèses aux tarifs plafonnés.</div>
+    </div>
+    <div class="term-card" data-term="parodontite" data-def="inflammation qui atteint les tissus profonds de soutien de la dent (os, ligament) — contrairement à la gingivite, les dégâts ne sont pas réversibles.">
+      <div class="term-name">Parodontite</div>
+      <div class="term-def">Inflammation qui atteint les tissus profonds de soutien de la dent (os, ligament) — contrairement à la gingivite, les dégâts ne sont pas réversibles.</div>
+    </div>
+    <div class="term-card" data-term="pcr" data-def="personne compétente en radioprotection, obligatoirement désignée par tout cabinet disposant d&#x27;un appareil de radiographie — peut être externe au cabinet.">
+      <div class="term-name">PCR</div>
+      <div class="term-def">Personne Compétente en Radioprotection, obligatoirement désignée par tout cabinet disposant d&#x27;un appareil de radiographie — peut être externe au cabinet.</div>
+    </div>
+    <div class="term-card" data-term="pulpe dentaire" data-def="tissu mou et vascularisé au centre de la dent, contenant les nerfs — sa lésion est à l&#x27;origine de la douleur dentaire aiguë.">
+      <div class="term-name">Pulpe dentaire</div>
+      <div class="term-def">Tissu mou et vascularisé au centre de la dent, contenant les nerfs — sa lésion est à l&#x27;origine de la douleur dentaire aiguë.</div>
+    </div>
+    <div class="term-card" data-term="rgpd" data-def="règlement général sur la protection des données. le praticien est responsable de traitement du dossier patient, conservé 20 ans à compter de la dernière prise en charge.">
+      <div class="term-name">RGPD</div>
+      <div class="term-def">Règlement Général sur la Protection des Données. Le praticien est responsable de traitement du dossier patient, conservé 20 ans à compter de la dernière prise en charge.</div>
+    </div>
+    <div class="term-card" data-term="rncp" data-def="répertoire national des certifications professionnelles. le titre d&#x27;assistant dentaire y est enregistré au niveau 4, sous le code rncp 38144.">
+      <div class="term-name">RNCP</div>
+      <div class="term-def">Répertoire National des Certifications Professionnelles. Le titre d&#x27;assistant dentaire y est enregistré au niveau 4, sous le code RNCP 38144.</div>
+    </div>
+    <div class="term-card" data-term="secret professionnel" data-def="obligation de confidentialité qui s&#x27;impose à l&#x27;assistant(e) dentaire au même titre qu&#x27;au praticien, sur tout ce qui concerne les patients.">
+      <div class="term-name">Secret professionnel</div>
+      <div class="term-def">Obligation de confidentialité qui s&#x27;impose à l&#x27;assistant(e) dentaire au même titre qu&#x27;au praticien, sur tout ce qui concerne les patients.</div>
+    </div>
+    <div class="term-card" data-term="travail à 4 mains" data-def="organisation du soin où l&#x27;assistant(e), positionné(e) face au praticien, lui transmet les instruments par la zone de transfert sans qu&#x27;il ait à quitter la bouche du patient des yeux.">
+      <div class="term-name">Travail à 4 mains</div>
+      <div class="term-def">Organisation du soin où l&#x27;assistant(e), positionné(e) face au praticien, lui transmet les instruments par la zone de transfert sans qu&#x27;il ait à quitter la bouche du patient des yeux.</div>
+    </div>
+    <div class="term-card" data-term="ufsbd" data-def="union française pour la santé bucco-dentaire — source de référence pour les conseils d&#x27;hygiène et la conduite à tenir face aux traumatismes dentaires.">
+      <div class="term-name">UFSBD</div>
+      <div class="term-def">Union Française pour la Santé Bucco-Dentaire — source de référence pour les conseils d&#x27;hygiène et la conduite à tenir face aux traumatismes dentaires.</div>
+    </div>
+    <div class="term-card" data-term="zone de transfert" data-def="espace horaire (entre 4h et 7h autour du patient) par lequel l&#x27;assistant(e) fait passer les instruments au praticien pendant le soin.">
+      <div class="term-name">Zone de transfert</div>
+      <div class="term-def">Espace horaire (entre 4h et 7h autour du patient) par lequel l&#x27;assistant(e) fait passer les instruments au praticien pendant le soin.</div>
+    </div>
+    <div class="term-card" data-term="émail" data-def="tissu le plus dur du corps humain, qui recouvre et protège la couronne de la dent.">
+      <div class="term-name">Émail</div>
+      <div class="term-def">Tissu le plus dur du corps humain, qui recouvre et protège la couronne de la dent.</div>
+    </div>
+  </div>
+
+  <div class="empty-state" id="empty">Aucun terme ne correspond à votre recherche.</div>
+
+  <footer>MEDEXPERT · PRAXIS · RNCP 38144</footer>
+</div>
+
+<script>
+function filtrer(){
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  const cards = document.querySelectorAll('.term-card');
+  let visible = 0;
+  cards.forEach(c => {
+    const match = !q || c.dataset.term.includes(q) || c.dataset.def.includes(q);
+    c.classList.toggle('hidden', !match);
+    if(match) visible++;
+  });
+  document.getElementById('count').textContent = visible + (visible > 1 ? ' termes' : ' terme');
+  document.getElementById('empty').style.display = visible === 0 ? 'block' : 'none';
+}
+</script>
+</body>
+</html>
