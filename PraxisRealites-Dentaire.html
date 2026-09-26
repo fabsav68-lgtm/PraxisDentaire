@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PraxisDentaire · Réalités du métier</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fdfcfb; --bg2:#f4faf9; --panel:#ffffff; --bdr:#e2ede9;
+  --txt:#1a2e2a; --txt2:#6b8580; --mint:#2dd4bf; --mint-dk:#0d9488;
+  --coral:#ff8a7a; --red:#e8604a; --amber:#f5a623;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Poppins',system-ui,sans-serif;
+  background:linear-gradient(160deg,var(--bg) 0%,var(--bg2) 100%);
+  color:var(--txt);min-height:100vh;padding-bottom:60px;
+}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+
+.topbar{display:flex;align-items:center;gap:10px;padding:20px 0 6px}
+.back-link{display:flex;align-items:center;gap:6px;color:var(--txt2);text-decoration:none;font-size:13px}
+.back-link svg{width:20px;height:20px}
+
+header{padding:16px 0 20px}
+.bc-badge{
+  display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;
+  font-size:11.5px;letter-spacing:1px;color:var(--coral);background:rgba(255,138,122,.1);
+  border:1px solid rgba(255,138,122,.35);padding:5px 12px;border-radius:20px;margin-bottom:12px;
+}
+h1{font-weight:700;font-size:clamp(24px,5.5vw,32px);letter-spacing:-.3px}
+.tagline{color:var(--txt2);font-size:14px;margin-top:8px;max-width:480px;line-height:1.6}
+
+.risk-card{background:var(--panel);border:1.5px solid var(--bdr);border-radius:14px;margin-bottom:12px;overflow:hidden;box-shadow:0 2px 10px rgba(13,148,136,.05)}
+.risk-head{display:flex;align-items:center;gap:12px;padding:16px;cursor:pointer}
+.risk-icon{font-size:24px;flex-shrink:0}
+.risk-title{font-weight:700;font-size:15px;flex:1}
+.risk-chevron{color:var(--txt2);font-size:13px;transition:transform .2s}
+.risk-card.open .risk-chevron{transform:rotate(90deg)}
+.risk-body{display:none;padding:0 18px 16px 18px}
+.risk-card.open .risk-body{display:block}
+.risk-body ul{padding-left:20px}
+.risk-body li{font-size:13.5px;color:var(--txt);line-height:1.65;margin-bottom:8px}
+
+.note-box{
+  background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.3);border-radius:12px;
+  padding:14px 16px;margin:20px 0 6px;font-size:12.5px;color:var(--txt);line-height:1.6;
+}
+.note-box strong{color:#b8760f}
+
+footer{text-align:center;padding:30px 20px 10px;color:var(--txt2);font-size:11px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <a class="back-link" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      PraxisDentaire
+    </a>
+  </div>
+
+  <header>
+    <div class="bc-badge">🛡️ RÉALITÉS DU MÉTIER</div>
+    <h1>Santé et sécurité au travail</h1>
+    <p class="tagline">6 catégories de risques professionnels propres au fauteuil dentaire — 16 points vérifiés, centrés sur la sécurité du soignant plutôt que celle du patient seul.</p>
+  </header>
+
+  <div class="risk-card">
+    <div class="risk-head" onclick="toggleRisk(this)">
+      <div class="risk-icon">🦴</div>
+      <div class="risk-title">Troubles musculo-squelettiques (TMS)</div>
+      <div class="risk-chevron">▶</div>
+    </div>
+    <div class="risk-body">
+      <ul><li>Torsion prolongée du cou et du dos pour voir dans la bouche du patient, position assise statique, gestes fins répétitifs — les 3 facteurs biomécaniques classiques des TMS réunis dans un même poste</li><li>Une étude française menée auprès des orthodontistes retrouve un TMS chez 84% des praticiens sur les 12 derniers mois — un chiffre qui donne la mesure du risque sur l&#x27;ensemble de la profession dentaire</li><li>Prévention : ajuster systématiquement la hauteur du fauteuil et du siège à chaque installation, alterner les appuis, s&#x27;accorder de courtes pauses d&#x27;étirement entre deux patients</li></ul>
+    </div>
+  </div>
+
+  <div class="risk-card">
+    <div class="risk-head" onclick="toggleRisk(this)">
+      <div class="risk-icon">🩸</div>
+      <div class="risk-title">AES — Accident d&#x27;exposition au sang</div>
+      <div class="risk-chevron">▶</div>
+    </div>
+    <div class="risk-body">
+      <ul><li>Tout contact avec du sang par piqûre, coupure, ou projection sur une muqueuse (œil, bouche) ou une peau lésée</li><li>CAT immédiate : ne pas faire saigner la plaie, laver à l&#x27;eau et au savon, rincer, puis désinfecter au moins 5 minutes (Dakin, Bétadine ou alcool à 70°)</li><li>Consulter rapidement après les premiers gestes — idéalement dans les heures qui suivent — pour évaluer un éventuel traitement post-exposition, et déclarer l&#x27;accident du travail</li><li>Prévention : ne jamais recapuchonner une aiguille à la main, utiliser systématiquement les collecteurs d&#x27;objets piquants/coupants</li></ul>
+    </div>
+  </div>
+
+  <div class="risk-card">
+    <div class="risk-head" onclick="toggleRisk(this)">
+      <div class="risk-icon">☢️</div>
+      <div class="risk-title">Rayonnements ionisants</div>
+      <div class="risk-chevron">▶</div>
+    </div>
+    <div class="risk-body">
+      <ul><li>Dès qu&#x27;on intervient en zone surveillée ou contrôlée (salle de radiographie), on est un travailleur exposé — le dosimètre passif est obligatoire, pas optionnel</li><li>Une Personne Compétente en Radioprotection (PCR) doit être désignée par le cabinet, et un suivi médical accompagne ce statut</li></ul>
+    </div>
+  </div>
+
+  <div class="risk-card">
+    <div class="risk-head" onclick="toggleRisk(this)">
+      <div class="risk-icon">🧪</div>
+      <div class="risk-title">Risque chimique</div>
+      <div class="risk-chevron">▶</div>
+    </div>
+    <div class="risk-body">
+      <ul><li>L&#x27;amalgame dentaire contient environ 50% de mercure — éviter tout contact cutané direct, en plus de la filière d&#x27;élimination stricte déjà vue en hygiène</li><li>Les produits de stérilisation et de désinfection peuvent irriter la peau et les voies respiratoires : port de gants adapté, aération de la pièce lors de leur utilisation</li></ul>
+    </div>
+  </div>
+
+  <div class="risk-card">
+    <div class="risk-head" onclick="toggleRisk(this)">
+      <div class="risk-icon">🔊</div>
+      <div class="risk-title">Bruit</div>
+      <div class="risk-chevron">▶</div>
+    </div>
+    <div class="risk-body">
+      <ul><li>Le niveau sonore mesuré au cabinet dentaire varie de 64 à 112 dB selon les instruments utilisés (turbines, aspiration) — une fourchette qui recoupe le seuil de risque auditif reconnu, situé autour de 80-85 dB en exposition prolongée</li><li>Prévention : éviter les expositions prolongées sans coupure, signaler sans tarder toute gêne auditive ou apparition d&#x27;acouphènes</li></ul>
+    </div>
+  </div>
+
+  <div class="risk-card">
+    <div class="risk-head" onclick="toggleRisk(this)">
+      <div class="risk-icon">🧠</div>
+      <div class="risk-title">Risques psychosociaux</div>
+      <div class="risk-chevron">▶</div>
+    </div>
+    <div class="risk-body">
+      <ul><li>Gestion répétée de patients anxieux, douloureux, parfois impatients ou agressifs — une charge émotionnelle qui s&#x27;ajoute à la charge technique</li><li>Rythme de travail soutenu, responsabilité partagée dans la sécurité du soin au fauteuil</li><li>Ne pas rester seul(e) face à une situation difficile : en parler avec l&#x27;équipe reste le meilleur levier de prévention au quotidien</li></ul>
+    </div>
+  </div>
+
+  <div class="note-box">
+    💡 <strong>Pourquoi ce module</strong> : le référentiel évalue surtout la sécurité du patient et du soin. Cette page couvre l'autre versant, tout aussi réel — ce que le métier demande physiquement et psychologiquement à celui ou celle qui le pratique.
+  </div>
+
+  <footer>MEDEXPERT · PRAXIS · RNCP 38144</footer>
+</div>
+
+<script>
+function toggleRisk(head){
+  head.closest('.risk-card').classList.toggle('open');
+}
+</script>
+</body>
+</html>
