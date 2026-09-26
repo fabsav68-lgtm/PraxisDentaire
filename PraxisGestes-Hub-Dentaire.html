@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PraxisDentaire · Hub gestes</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fdfcfb; --bg2:#f4faf9; --panel:#ffffff; --bdr:#e2ede9;
+  --txt:#1a2e2a; --txt2:#6b8580; --mint:#2dd4bf; --mint-dk:#0d9488;
+  --coral:#ff8a7a; --red:#e8604a; --amber:#f5a623;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Poppins',system-ui,sans-serif;
+  background:linear-gradient(160deg,var(--bg) 0%,var(--bg2) 100%);
+  color:var(--txt);min-height:100vh;padding-bottom:60px;
+}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+
+.topbar{display:flex;align-items:center;gap:10px;padding:20px 0 6px}
+.back-link{display:flex;align-items:center;gap:6px;color:var(--txt2);text-decoration:none;font-size:13px}
+.back-link svg{width:20px;height:20px}
+
+header{padding:16px 0 20px}
+.bc-badge{
+  display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;
+  font-size:11.5px;letter-spacing:1px;color:var(--mint-dk);background:rgba(45,212,191,.1);
+  border:1px solid rgba(45,212,191,.3);padding:5px 12px;border-radius:20px;margin-bottom:12px;
+}
+h1{font-weight:700;font-size:clamp(24px,5.5vw,32px);letter-spacing:-.3px}
+.tagline{color:var(--txt2);font-size:14px;margin-top:8px;max-width:480px;line-height:1.6}
+
+.note-box{
+  background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.3);border-radius:12px;
+  padding:14px 16px;margin:18px 0 24px;font-size:12.5px;color:var(--txt);line-height:1.6;
+}
+.note-box strong{color:#b8760f}
+
+.geste-card{background:var(--panel);border:1.5px solid var(--bdr);border-radius:14px;margin-bottom:12px;overflow:hidden;box-shadow:0 2px 10px rgba(13,148,136,.05)}
+.geste-head{display:flex;align-items:center;gap:12px;padding:16px;cursor:pointer}
+.geste-badge{
+  width:26px;height:26px;border-radius:50%;background:var(--mint-dk);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:700;flex-shrink:0;
+}
+.geste-icon{font-size:22px;flex-shrink:0}
+.geste-title{font-weight:700;font-size:15px;flex:1}
+.geste-chevron{color:var(--txt2);font-size:13px;transition:transform .2s}
+.geste-card.open .geste-chevron{transform:rotate(90deg)}
+.geste-body{display:none;padding:0 18px 18px 18px}
+.geste-card.open .geste-body{display:block}
+.geste-indic{font-size:13.5px;color:var(--txt2);font-style:italic;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--bdr)}
+.geste-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.5px;color:var(--mint-dk);margin:14px 0 6px}
+.geste-body ul, .geste-body ol{padding-left:20px}
+.geste-body li{font-size:13px;color:var(--txt);line-height:1.6;margin-bottom:4px}
+.geste-astuce, .geste-vigilance, .geste-erreur{font-size:12.5px;line-height:1.6;border-radius:10px;padding:10px 12px;margin-top:10px}
+.geste-astuce{background:rgba(45,212,191,.08);border:1px solid rgba(45,212,191,.25)}
+.geste-vigilance{background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.25)}
+.geste-erreur{background:rgba(232,96,74,.08);border:1px solid rgba(232,96,74,.25)}
+
+footer{text-align:center;padding:30px 20px 10px;color:var(--txt2);font-size:11px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <a class="back-link" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      PraxisDentaire
+    </a>
+  </div>
+
+  <header>
+    <div class="bc-badge">🧰 HUB GESTES</div>
+    <h1>Fiches techniques essentielles</h1>
+    <p class="tagline">Les gestes du quotidien, en fiche autonome : matériel, étapes, astuces et points de vigilance.</p>
+  </header>
+
+  <div class="note-box">
+    ⚠️ <strong>Ces fiches sont un support de révision</strong> — elles ne remplacent ni le protocole du cabinet, ni l'encadrement du praticien ou du formateur en stage.
+  </div>
+
+  <div class="geste-card">
+    <div class="geste-head" onclick="toggleGeste(this)">
+      <div class="geste-badge">1</div>
+      <div class="geste-icon">🗂️</div>
+      <div class="geste-title">Préparer le plateau et la salle</div>
+      <div class="geste-chevron">▶</div>
+    </div>
+    <div class="geste-body">
+      <div class="geste-indic">Avant tout acte, quel qu&#x27;il soit — détartrage, soin composite, extraction, pose de prothèse.</div>
+
+      <div class="geste-label">🧰 Matériel</div>
+      <ul><li>Dossier patient / fiche de soin</li><li>Plateau de base (miroir, sonde, précelle)</li><li>Instruments spécifiques à l&#x27;acte prévu</li><li>Champ patient à usage unique, bavette, lunettes</li></ul>
+
+      <div class="geste-label">📋 Étapes</div>
+      <ol><li>Consulter le dossier patient et l&#x27;acte exact prévu par le praticien</li><li>Sortir les instruments dans l&#x27;ordre chronologique d&#x27;utilisation</li><li>Vérifier que tout le matériel nécessaire à l&#x27;acte est présent, avant l&#x27;installation du patient</li><li>Adapter l&#x27;inclinaison du fauteuil à l&#x27;acte à venir (plus incliné pour le maxillaire, plus redressé pour la mandibule)</li><li>Vérifier la propreté et la stérilité de l&#x27;ensemble du plateau</li><li>Préparer le champ patient et les protections (bavette, lunettes)</li></ol>
+
+      <div class="geste-astuce">💡 <strong>Astuce</strong> — Grouper les instruments par ordre d&#x27;utilisation facilite le travail à 4 mains — le praticien retrouve toujours la même logique de plateau, quel que soit l&#x27;acte.</div>
+      <div class="geste-vigilance">👁️ <strong>Point de vigilance</strong> — La moindre pièce manquante en cours de soin interrompt le praticien en plein geste — mieux vaut vérifier deux fois avant l&#x27;installation du patient qu&#x27;une fois après.</div>
+      <div class="geste-erreur">⚠️ <strong>Erreurs fréquentes</strong> — Préparer le plateau sans avoir confirmé l&#x27;acte exact auprès du praticien ; installer le patient avant d&#x27;avoir terminé de vérifier le plateau.</div>
+    </div>
+  </div>
+
+  <div class="geste-card">
+    <div class="geste-head" onclick="toggleGeste(this)">
+      <div class="geste-badge">2</div>
+      <div class="geste-icon">🪑</div>
+      <div class="geste-title">Installer le patient selon l&#x27;acte</div>
+      <div class="geste-chevron">▶</div>
+    </div>
+    <div class="geste-body">
+      <div class="geste-indic">Toute prise en charge au fauteuil, dès l&#x27;arrivée du patient en salle de soins.</div>
+
+      <div class="geste-label">🧰 Matériel</div>
+      <ul><li>Fauteuil dentaire</li><li>Appui-tête réglable</li><li>Bavette, lunettes de protection</li><li>Coussin/appui si besoin</li></ul>
+
+      <div class="geste-label">📋 Étapes</div>
+      <ol><li>Accueillir et accompagner le patient jusqu&#x27;au fauteuil</li><li>Ajuster la hauteur du fauteuil pour faciliter l&#x27;installation</li><li>Incliner le fauteuil selon l&#x27;acte : plus allongé pour le maxillaire, plus redressé pour la mandibule</li><li>Positionner l&#x27;appui-tête pour un bon maintien cervical</li><li>Mettre en place la bavette et proposer les lunettes de protection</li><li>Vérifier le confort général (dos, jambes) avant le début du soin</li></ol>
+
+      <div class="geste-astuce">💡 <strong>Astuce</strong> — Pour un patient âgé ou à mobilité réduite, incliner le fauteuil lentement, par paliers — une bascule trop rapide peut provoquer une sensation de vertige.</div>
+      <div class="geste-vigilance">👁️ <strong>Point de vigilance</strong> — Les premiers signes d&#x27;inconfort ou d&#x27;anxiété se lisent souvent dès l&#x27;installation, avant même le début du soin — c&#x27;est le bon moment pour les repérer.</div>
+      <div class="geste-erreur">⚠️ <strong>Erreurs fréquentes</strong> — Incliner le fauteuil trop rapidement ; garder une position inadaptée à l&#x27;acte, ce qui complique le geste du praticien.</div>
+    </div>
+  </div>
+
+  <div class="geste-card">
+    <div class="geste-head" onclick="toggleGeste(this)">
+      <div class="geste-badge">3</div>
+      <div class="geste-icon">🧴</div>
+      <div class="geste-title">Fin de soin : nettoyage du poste et tri des déchets</div>
+      <div class="geste-chevron">▶</div>
+    </div>
+    <div class="geste-body">
+      <div class="geste-indic">Systématiquement après chaque patient, avant l&#x27;installation du suivant.</div>
+
+      <div class="geste-label">🧰 Matériel</div>
+      <ul><li>Produit détergent-désinfectant de surface</li><li>Gants</li><li>Sacs de tri (DASRI, déchets courants, amalgame le cas échéant)</li></ul>
+
+      <div class="geste-label">📋 Étapes</div>
+      <ol><li>Retirer et trier les déchets de soin selon leur catégorie</li><li>Décontaminer le fauteuil, l&#x27;accoudoir, la tablette et le crachoir avec le produit dédié</li><li>Respecter le temps de contact indiqué par le fabricant avant de considérer la surface désinfectée</li><li>Rassembler les instruments utilisés pour le circuit de pré-désinfection, sans les laisser sécher</li><li>Vérifier qu&#x27;aucun résidu d&#x27;amalgame ne part dans le circuit d&#x27;eau, le cas échéant</li><li>Reconstituer le poste pour le patient suivant (champ propre, plateau prêt)</li></ol>
+
+      <div class="geste-astuce">💡 <strong>Astuce</strong> — Désinfecter dans un ordre systématique, toujours du plus propre vers le plus sale, pour ne rien oublier.</div>
+      <div class="geste-vigilance">👁️ <strong>Point de vigilance</strong> — Le temps de contact du désinfectant compte autant que le passage lui-même — un temps trop court ne garantit pas une décontamination réelle.</div>
+      <div class="geste-erreur">⚠️ <strong>Erreurs fréquentes</strong> — Réinstaller un patient avant la fin du temps de contact du désinfectant ; mélanger les circuits de déchets.</div>
+    </div>
+  </div>
+
+  <div class="geste-card">
+    <div class="geste-head" onclick="toggleGeste(this)">
+      <div class="geste-badge">4</div>
+      <div class="geste-icon">🩸</div>
+      <div class="geste-title">Hémorragie post-extraction</div>
+      <div class="geste-chevron">▶</div>
+    </div>
+    <div class="geste-body">
+      <div class="geste-indic">Saignement au niveau d&#x27;un site d&#x27;extraction, constaté au cabinet ou signalé par téléphone.</div>
+
+      <div class="geste-label">🧰 Matériel</div>
+      <ul><li>Compresses stériles</li><li>Gants</li><li>Poche de glace</li></ul>
+
+      <div class="geste-label">📋 Étapes</div>
+      <ol><li>Installer le patient en position semi-assise, tête légèrement surélevée</li><li>Lui faire mordre fermement une compresse stérile directement sur le site</li><li>Maintenir la pression en continu au moins 30 à 60 minutes, sans retirer la compresse pour vérifier</li><li>Appliquer une poche de glace côté joue pour limiter l&#x27;œdème associé</li><li>Si le saignement persiste au-delà de ce délai, prévenir immédiatement le praticien</li><li>Une fois le saignement arrêté, transmettre les consignes post-opératoires (pas d&#x27;alcool, tabac, effort dans les 24h ; ne pas déranger le caillot)</li></ol>
+
+      <div class="geste-astuce">💡 <strong>Astuce</strong> — Rappeler au patient que retirer la compresse &quot;pour voir si ça saigne encore&quot; est la cause la plus fréquente d&#x27;un saignement qui persiste.</div>
+      <div class="geste-vigilance">👁️ <strong>Point de vigilance</strong> — Chez un patient sous anticoagulants, tout saignement qui ne cède pas à la compression justifie un avis médical sans délai.</div>
+      <div class="geste-erreur">⚠️ <strong>Erreurs fréquentes</strong> — Laisser le patient rincer vigoureusement la bouche juste après (déloge le caillot) ; changer la compresse trop souvent.</div>
+    </div>
+  </div>
+
+  <footer>MEDEXPERT · PRAXIS · RNCP 38144</footer>
+</div>
+
+<script>
+function toggleGeste(head){
+  head.closest('.geste-card').classList.toggle('open');
+}
+</script>
+</body>
+</html>
