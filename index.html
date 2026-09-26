@@ -246,7 +246,9 @@ if ('serviceWorker' in navigator) {
     <div id="binome-actuel" style="background:rgba(45,212,191,.08);border:1px solid rgba(45,212,191,.25);border-radius:8px;padding:10px;margin-bottom:14px;font-size:13px;color:#0d9488;display:none"></div>
     <input id="binome-input" placeholder="DENTAIRE-BC01-001" style="width:100%;padding:11px;background:#f4faf9;border:1.5px solid #e2ede9;border-radius:8px;color:#1a2e2a;font-size:14px;text-align:center;text-transform:uppercase;font-family:'JetBrains Mono',monospace;margin-bottom:10px">
     <button onclick="lierBinome()" style="width:100%;padding:11px;background:#0d9488;color:#fff;border:none;border-radius:8px;font-weight:600;font-size:14px;cursor:pointer;margin-bottom:8px;font-family:'Poppins',sans-serif">Lier ce binôme</button>
+    <button onclick="voirScoreBinome()" style="width:100%;padding:11px;background:rgba(45,212,191,.1);color:#0d9488;border:1.5px solid rgba(45,212,191,.35);border-radius:8px;font-weight:600;font-size:14px;cursor:pointer;margin-bottom:8px;font-family:'Poppins',sans-serif">Voir notre score commun</button>
     <div id="binome-msg" style="font-size:12px;margin-bottom:10px;min-height:16px"></div>
+    <div id="binome-score" style="display:none;background:#f4faf9;border:1px solid #e2ede9;border-radius:10px;padding:14px;margin-bottom:12px;text-align:left"></div>
     <button onclick="fermerBinome()" style="background:none;border:1.5px solid #e2ede9;color:#6b8580;padding:9px 20px;border-radius:8px;cursor:pointer;font-size:12.5px;font-family:'Poppins',sans-serif">Fermer</button>
   </div>
 </div>
@@ -299,6 +301,44 @@ function lierBinome(){
     msg.textContent = 'Binôme ' + cb + ' lié avec succès !';
     document.getElementById('binome-actuel').style.display = 'block';
     document.getElementById('binome-actuel').textContent = 'Binôme actuel : ' + cb;
+  })
+  .catch(() => {
+    msg.style.color = '#e8604a';
+    msg.textContent = 'Erreur de connexion, réessayez.';
+  });
+}
+
+function voirScoreBinome(){
+  const monCode = sessionStorage.getItem('praxisdentaire_code');
+  const cb = localStorage.getItem('praxisdentaire_binome');
+  const scoreDiv = document.getElementById('binome-score');
+  const msg = document.getElementById('binome-msg');
+
+  if(!cb){ msg.style.color = '#e8604a'; msg.textContent = "Liez d'abord un binôme."; return; }
+
+  msg.style.color = '#6b8580'; msg.textContent = 'Chargement...';
+  scoreDiv.style.display = 'none';
+
+  fetch(SUPABASE_URL_BINOME + '/rest/v1/connexions_historique?student_code=in.(' + monCode + ',' + cb + ')&step=eq.ouverture&select=student_code,module', {
+    headers: { 'apikey': SUPABASE_KEY_BINOME, 'Authorization': 'Bearer ' + SUPABASE_KEY_BINOME },
+  })
+  .then(r => r.json())
+  .then(data => {
+    const moi = data.filter(d => d.student_code === monCode).map(d => d.module);
+    const bin = data.filter(d => d.student_code === cb).map(d => d.module);
+    const communs = [...new Set(moi.filter(m => bin.includes(m)))];
+    const badge = communs.length >= 8 ? 'Duetiste Expert Dentaire'
+                : communs.length >= 4 ? 'Duetiste Actif'
+                : communs.length >= 1 ? 'Duetiste Débutant'
+                : 'Duetiste Inscrit';
+
+    scoreDiv.style.display = 'block';
+    scoreDiv.innerHTML =
+      '<div style="text-align:center;font-size:16px;color:#0d9488;font-weight:700;margin-bottom:8px">' + badge + '</div>' +
+      '<div style="color:#6b8580;font-size:12px">Modules explorés en commun : <strong style="color:#0d9488">' + communs.length + '</strong></div>' +
+      '<div style="color:#6b8580;font-size:12px;margin-top:4px">Binôme : <strong style="color:#0d9488">' + cb + '</strong></div>' +
+      (communs.length > 0 ? '<div style="margin-top:8px;font-size:11px;color:#6b8580">' + communs.join(', ') + '</div>' : '');
+    msg.textContent = '';
   })
   .catch(() => {
     msg.style.color = '#e8604a';
